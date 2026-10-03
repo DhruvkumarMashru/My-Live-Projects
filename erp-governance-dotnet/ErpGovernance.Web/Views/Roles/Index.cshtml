@@ -1,0 +1,44 @@
+@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole<int>>
+
+@{
+    ViewData["Title"] = "Roles Management";
+}
+
+<div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div>
+        <h1 class="text-2xl font-bold text-slate-800 tracking-tight">Roles</h1>
+        <p class="text-sm text-slate-500 mt-1">Manage system roles and their permissions.</p>
+    </div>
+    <a href="/Roles/Create" class="inline-flex items-center rounded-lg bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">
+        Create New Role
+    </a>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+    <table class="min-w-full divide-y divide-slate-200">
+        <thead class="bg-slate-50">
+            <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Role Name</th>
+                <th class="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200 bg-white">
+            @foreach (var role in Model)
+            {
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">@role.Name</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-3">
+                        <a href="/Roles/ManagePermissions/@role.Id" class="text-indigo-600 hover:text-indigo-900">Permissions</a>
+                        @if (role.Name != "super_admin")
+                        {
+                            <a href="/Roles/Edit/@role.Id" class="text-blue-600 hover:text-blue-900">Edit</a>
+                            <form asp-action="Delete" asp-route-id="@role.Id" method="post" class="inline" onsubmit="return confirm('Are you sure you want to delete this role?');">
+                                <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

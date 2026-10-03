@@ -1,0 +1,115 @@
+@model ErpGovernance.Domain.Entities.Activity
+@using ErpGovernance.Web.Helpers
+
+@{
+    ViewData["Title"] = "Activity Detail";
+}
+
+<div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div>
+        <h1 class="text-2xl font-bold text-slate-800 tracking-tight">@Model.Title</h1>
+        <p class="text-sm text-slate-500 mt-1">Checklist: @Model.Checklist.Name | Project: @Model.Checklist.SubModule.SubModuleGroup.Module.Project.Name</p>
+    </div>
+    <div class="flex gap-2">
+        <a href="/Activities/Edit/@Model.Id" class="inline-flex items-center rounded-lg bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">Edit Activity</a>
+        <a href="/Activities?checklistId=@Model.ChecklistId" class="inline-flex items-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-50">Back to List</a>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="lg:col-span-2 space-y-6">
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+            <h3 class="text-lg font-medium text-slate-900 mb-4">Activity Information</h3>
+            <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-6">
+                <div>
+                    <dt class="text-sm font-medium text-slate-500">Description</dt>
+                    <dd class="mt-1 text-sm text-slate-900">@(string.IsNullOrEmpty(Model.Description) ? "—" : Model.Description)</dd>
+                </div>
+                <div>
+                    <dt class="text-sm font-medium text-slate-500">Type & Status</dt>
+                    <dd class="mt-1 flex items-center gap-2">
+                        <span class="@DisplayHelpers.ActivityTypeBadgeClass(Model.ActivityType.ToString())">@DisplayHelpers.ActivityTypeLabel(Model.ActivityType.ToString())</span>
+                        <span class="@DisplayHelpers.StatusBadgeClass(Model.Status.ToString())">@DisplayHelpers.StatusLabel(Model.Status.ToString())</span>
+                    </dd>
+                </div>
+                <div>
+                    <dt class="text-sm font-medium text-slate-500">Assigned To</dt>
+                    <dd class="mt-1 text-sm text-slate-900">@(Model.AssignedUser?.FullName ?? Model.ResponsibleTeam ?? "Unassigned")</dd>
+                </div>
+                <div>
+                    <dt class="text-sm font-medium text-slate-500">Priority & Progress</dt>
+                    <dd class="mt-1 flex items-center gap-3">
+                        <span class="@DisplayHelpers.PriorityBadgeClass(Model.Priority.ToString())">@Model.Priority.ToString()</span>
+                        <span class="text-sm font-medium text-slate-700">@Model.ProgressPercentage%</span>
+                    </dd>
+                </div>
+                <div>
+                    <dt class="text-sm font-medium text-slate-500">Timeline</dt>
+                    <dd class="mt-1 text-sm text-slate-900">
+                        <div class="text-xs text-slate-500">Expected: @DisplayHelpers.FormatDate(Model.ExpectedStartDate) to @DisplayHelpers.FormatDate(Model.ExpectedEndDate)</div>
+                        <div class="text-xs text-slate-500">Actual: @DisplayHelpers.FormatDateTime(Model.ActualStartDateTime) to @DisplayHelpers.FormatDateTime(Model.ActualEndDateTime)</div>
+                    </dd>
+                </div>
+                <div>
+                    <dt class="text-sm font-medium text-slate-500">Next Follow-up</dt>
+                    <dd class="mt-1 text-sm text-slate-900">@DisplayHelpers.FormatDate(Model.NextFollowupDate)</dd>
+                </div>
+            </dl>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+            <h3 class="text-lg font-medium text-slate-900 mb-4">Meeting Notes & Outcomes</h3>
+            <div class="space-y-4">
+                <div>
+                    <h4 class="text-sm font-medium text-slate-500">Participants</h4>
+                    <p class="mt-1 text-sm text-slate-900">@(string.IsNullOrEmpty(Model.Participants) ? "—" : Model.Participants)</p>
+                </div>
+                <div>
+                    <h4 class="text-sm font-medium text-slate-500">Meeting Notes</h4>
+                    <div class="mt-1 p-3 bg-slate-50 rounded-lg text-sm text-slate-800 whitespace-pre-wrap">@(string.IsNullOrEmpty(Model.MeetingNotes) ? "No notes recorded." : Model.MeetingNotes)</div>
+                </div>
+                <div>
+                    <h4 class="text-sm font-medium text-slate-500">Outcome</h4>
+                    <div class="mt-1 p-3 bg-indigo-50 border border-indigo-100 rounded-lg text-sm text-indigo-900 whitespace-pre-wrap">@(string.IsNullOrEmpty(Model.Outcome) ? "No outcome recorded." : Model.Outcome)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="space-y-6">
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+            <h3 class="text-lg font-medium text-slate-900 mb-4">Communication Log</h3>
+            <div class="flow-root">
+                <ul role="list" class="-mb-8">
+                    @foreach (var log in Model.CommunicationLogs.OrderByDescending(c => c.CreatedAt))
+                    {
+                        <li>
+                            <div class="relative pb-8">
+                                <span class="absolute left-4 top-4 -ml-px h-full w-0.5 bg-slate-200" aria-hidden="true"></span>
+                                <div class="relative flex space-x-3">
+                                    <div>
+                                        <span class="h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center ring-8 ring-white">
+                                            <svg class="h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+                                        </span>
+                                    </div>
+                                    <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
+                                        <div>
+                                            <p class="text-sm text-slate-500">@log.Summary <span class="font-medium text-slate-900">@(log.LoggedBy?.FullName ?? "System")</span></p>
+                                        </div>
+                                        <div class="whitespace-nowrap text-right text-xs text-slate-500">
+                                            <time datetime="@log.CreatedAt.ToString("O")">@DisplayHelpers.FormatDateTimeIst(log.CreatedAt)</time>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                    @if (!Model.CommunicationLogs.Any())
+                    {
+                        <p class="text-sm text-slate-500 italic">No communications logged yet.</p>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

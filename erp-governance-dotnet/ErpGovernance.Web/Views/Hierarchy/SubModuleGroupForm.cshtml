@@ -1,0 +1,75 @@
+@model ErpGovernance.Application.DTOs.SubModuleGroupFormDto
+@{
+    var isEdit = Model.Id > 0;
+    ViewData["Title"] = isEdit ? "Edit Sub Module Group" : "Create Sub Module Group";
+    ViewData["ActiveNav"] = "Projects";
+}
+
+<div class="max-w-2xl mx-auto bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+    <div class="px-6 py-5 border-b border-slate-200 bg-slate-50 flex items-center gap-3">
+        <div class="p-2 rounded-lg bg-sky-50">
+            <svg class="w-5 h-5 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+        </div>
+        <h3 class="text-lg leading-6 font-semibold text-slate-900">@ViewData["Title"]</h3>
+    </div>
+    <div class="p-6">
+        <form asp-action="@(isEdit ? "SubModuleGroupEdit" : "SubModuleGroupCreate")" asp-route-id="@(isEdit ? Model.Id : 0)" method="post" class="space-y-5">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="ModuleId" />
+            <div asp-validation-summary="ModelOnly" class="text-sm text-rose-600 bg-rose-50 rounded-lg p-3 hidden"></div>
+
+            <div>
+                <label asp-for="Name" class="block text-sm font-medium text-slate-700">Name <span class="text-rose-500">*</span></label>
+                <input asp-for="Name" class="mt-1 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-slate-300 rounded-md" />
+                <span asp-validation-for="Name" class="text-xs text-rose-500"></span>
+            </div>
+            <div>
+                <label asp-for="Description" class="block text-sm font-medium text-slate-700">Description</label>
+                <textarea asp-for="Description" rows="3" class="mt-1 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-slate-300 rounded-md"></textarea>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label asp-for="Status" class="block text-sm font-medium text-slate-700">Status</label>
+                    <select asp-for="Status" asp-items="Html.GetEnumSelectList<ErpGovernance.Domain.Enums.ItemStatus>()" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-slate-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"></select>
+                </div>
+                <div>
+                    <label asp-for="Priority" class="block text-sm font-medium text-slate-700">Priority</label>
+                    <select asp-for="Priority" asp-items="Html.GetEnumSelectList<ErpGovernance.Domain.Enums.Priority>()" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-slate-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"></select>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label asp-for="ExpectedStartDate" class="block text-sm font-medium text-slate-700">Expected Start</label>
+                    <input asp-for="ExpectedStartDate" type="date" class="mt-1 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-slate-300 rounded-md" />
+                </div>
+                <div>
+                    <label asp-for="ExpectedEndDate" class="block text-sm font-medium text-slate-700">Expected End</label>
+                    <input asp-for="ExpectedEndDate" type="date" class="mt-1 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-slate-300 rounded-md" />
+                </div>
+            </div>
+            @if (isEdit)
+            {
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label asp-for="ActualStartDate" class="block text-sm font-medium text-slate-700">Actual Start</label>
+                        <input asp-for="ActualStartDate" type="date" class="mt-1 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-slate-300 rounded-md" />
+                    </div>
+                    <div>
+                        <label asp-for="ActualEndDate" class="block text-sm font-medium text-slate-700">Actual End</label>
+                        <input asp-for="ActualEndDate" type="date" class="mt-1 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-slate-300 rounded-md" />
+                    </div>
+                </div>
+            }
+            <div>
+                <label asp-for="Remarks" class="block text-sm font-medium text-slate-700">Remarks</label>
+                <textarea asp-for="Remarks" rows="2" class="mt-1 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-slate-300 rounded-md"></textarea>
+            </div>
+            <div class="pt-5 flex justify-end gap-3 border-t border-slate-200">
+                <a href="javascript:history.back()" class="bg-white py-2 px-4 border border-slate-300 rounded-md shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors">Cancel</a>
+                <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors">
+                    @(isEdit ? "Update Group" : "Create Group")
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

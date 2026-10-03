@@ -1,0 +1,118 @@
+@* Right-side slide-in modal panel for Dashboard AJAX editing *@
+<div id="erp-modal-overlay"
+     class="fixed inset-0 z-[900] bg-slate-900/40 backdrop-blur-[2px] hidden"
+     onclick="closeErpModal()">
+</div>
+
+<div id="erp-modal-panel"
+     class="fixed inset-y-0 right-0 z-[901] flex w-full max-w-lg flex-col bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out"
+     aria-modal="true" role="dialog">
+
+    <!-- Panel Header -->
+    <div class="flex h-14 shrink-0 items-center justify-between border-b border-slate-200 bg-gradient-to-r from-indigo-600 to-indigo-700 px-6">
+        <h2 id="erp-modal-title" class="text-base font-semibold text-white">Edit</h2>
+        <button onclick="closeErpModal()"
+                class="flex h-8 w-8 items-center justify-center rounded-lg text-indigo-200 hover:bg-white/20 hover:text-white transition-all">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- Loading Skeleton -->
+    <div id="erp-modal-loader" class="hidden flex-1 items-center justify-center p-8">
+        <div class="flex flex-col items-center gap-3">
+            <div class="h-10 w-10 animate-spin rounded-full border-[3px] border-slate-200 border-t-indigo-600"></div>
+            <p class="text-sm text-slate-500 font-medium">Loading...</p>
+        </div>
+    </div>
+
+    <!-- Content Area -->
+    <div id="erp-modal-content" class="flex-1 overflow-y-auto p-6">
+        <!-- Filled by AJAX -->
+    </div>
+</div>
+
+<script>
+    function openErpModal(url, title) {
+        const overlay = document.getElementById('erp-modal-overlay');
+        const panel   = document.getElementById('erp-modal-panel');
+        const content = document.getElementById('erp-modal-content');
+        const loader  = document.getElementById('erp-modal-loader');
+        const titleEl = document.getElementById('erp-modal-title');
+
+        if (title) titleEl.textContent = title;
+        overlay.classList.remove('hidden');
+        loader.classList.remove('hidden');
+        loader.classList.add('flex');
+        content.innerHTML = '';
+        panel.classList.remove('translate-x-full');
+
+        const token = document.querySelector('meta[name="csrf-token"]')?.content;
+        fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest', 'RequestVerificationToken': token } })
+            .then(r => r.text())
+            .then(html => {
+                loader.classList.add('hidden');
+                loader.classList.remove('flex');
+                content.innerHTML = html;
+                // Re-initialize any scripts in loaded content
+                content.querySelectorAll('script').forEach(s => {
+                    const ns = document.createElement('script');
+                    ns.textContent = s.textContent;
+                    document.body.appendChild(ns);
+                });
+            })
+            .catch(() => {
+                loader.classList.add('hidden');
+                loader.classList.remove('flex');
+                content.innerHTML = '<p class="text-red-500 text-sm font-medium text-center mt-8">Failed to load content. Please try again.</p>';
+            });
+    }
+
+    function closeErpModal() {
+        const overlay = document.getElementById('erp-modal-overlay');
+        const panel   = document.getElementById('erp-modal-panel');
+        overlay.classList.add('hidden');
+        panel.classList.add('translate-x-full');
+    }
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeErpModal();
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const content = document.getElementById('erp-modal-content');
+        if (content) {
+            content.addEventListener('submit', e => {
+                const form = e.target;
+                if (form && form.tagName === 'FORM') {
+                    e.preventDefault();
+                    const data = new FormData(form);
+                    const token = document.querySelector('meta[name="csrf-token"]')?.content;
+                    
+                    fetch(form.action, {
+                        method: 'POST',
+                        body: data,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'RequestVerificationToken': token
+                        }
+                    })
+                    .then(r => {
+                        if (r.ok) {
+                            closeErpModal();
+                            window.location.reload();
+                        } else {
+                            return r.text().then(html => {
+                                content.innerHTML = html;
+                            });
+                        }
+                    })
+                    .catch(() => {
+                        alert('An error occurred while saving the activity.');
+                    });
+                }
+            });
+        }
+    });
+</script>

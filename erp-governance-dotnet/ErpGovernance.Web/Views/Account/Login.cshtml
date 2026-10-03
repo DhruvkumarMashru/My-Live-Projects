@@ -1,0 +1,115 @@
+@model ErpGovernance.Web.Controllers.LoginViewModel
+@{
+    ViewData["Title"] = "Log in";
+    Layout = null; // No sidebar for login page
+}
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-900">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - ERP Governance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="h-full flex items-center justify-center relative overflow-hidden">
+    <!-- Background decorations -->
+    <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-indigo-600 opacity-20 blur-[100px]"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-cyan-600 opacity-20 blur-[100px]"></div>
+
+    <div class="w-full max-w-md px-8 py-10 z-10">
+        <div class="text-center mb-10">
+            <h1 class="text-3xl font-extrabold text-white tracking-tight mb-2">ERP Governance</h1>
+            <p class="text-slate-400 font-medium">Sign in to your account</p>
+        </div>
+
+        <div class="glass-panel rounded-2xl shadow-2xl p-8 sm:p-10">
+            <form method="post" asp-action="Login" asp-route-returnUrl="@ViewData["ReturnUrl"]" class="space-y-6">
+                <div asp-validation-summary="ModelOnly" class="text-sm text-rose-400 bg-rose-400/10 rounded-lg p-3"></div>
+
+                <div>
+                    <label asp-for="Email" class="block text-sm font-medium text-slate-300">Email address</label>
+                    <div class="mt-2">
+                        <input asp-for="Email" class="block w-full rounded-xl border-0 bg-slate-800/50 py-2.5 px-4 text-white shadow-sm ring-1 ring-inset ring-slate-700 placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 transition-all" placeholder="admin@erp.local" autocomplete="email" required />
+                    </div>
+                    <span asp-validation-for="Email" class="text-xs text-rose-400 mt-1 block"></span>
+                </div>
+
+                <div>
+                    <div class="flex items-center justify-between">
+                        <label asp-for="Password" class="block text-sm font-medium text-slate-300">Password</label>
+                    </div>
+                    <div class="mt-2">
+                        <input asp-for="Password" class="block w-full rounded-xl border-0 bg-slate-800/50 py-2.5 px-4 text-white shadow-sm ring-1 ring-inset ring-slate-700 placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 transition-all" placeholder="••••••••" autocomplete="current-password" required />
+                    </div>
+                    <span asp-validation-for="Password" class="text-xs text-rose-400 mt-1 block"></span>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input asp-for="RememberMe" class="h-4 w-4 rounded border-slate-700 bg-slate-800 text-indigo-500 focus:ring-indigo-500 focus:ring-offset-slate-900" />
+                        <label asp-for="RememberMe" class="ml-2 block text-sm text-slate-300">Remember me</label>
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit" id="btn-signin" class="flex w-full justify-center rounded-xl bg-gradient-to-r from-indigo-500 to-cyan-500 px-3 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-500/30 hover:from-indigo-400 hover:to-cyan-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 transition-all duration-200">
+                        Sign in
+                    </button>
+                </div>
+
+                <div class="relative my-2">
+                    <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-slate-700"></div></div>
+                    <div class="relative flex justify-center text-xs"><span class="bg-slate-800/70 px-3 text-slate-500">or</span></div>
+                </div>
+
+                <div>
+                    <button type="button" id="btn-demo-creds" onclick="fillDemoCredentials()"
+                        class="flex w-full justify-center items-center gap-2 rounded-xl border border-amber-500/40 bg-amber-500/10 px-3 py-2.5 text-sm font-semibold text-amber-300 hover:bg-amber-500/20 hover:border-amber-400 transition-all duration-200">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        Use Demo Credentials
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div id="demo-hint" class="mt-6 hidden">
+            <div class="glass-panel rounded-xl p-4 border border-amber-500/30 bg-amber-500/5">
+                <p class="text-xs text-amber-300 font-semibold mb-2 flex items-center gap-1">
+                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Demo Credentials
+                </p>
+                <div class="space-y-1 text-xs text-slate-400 font-mono">
+                    <div class="flex justify-between"><span class="text-slate-500">Email:</span> <span class="text-slate-200">admin@erp.local</span></div>
+                    <div class="flex justify-between"><span class="text-slate-500">Password:</span> <span class="text-slate-200">Admin@123456</span></div>
+                </div>
+                <p class="mt-2 text-[10px] text-slate-500">After login, use the <span class="text-amber-400 font-semibold">Seed Demo Data</span> button to populate the app with sample projects, modules, and activities.</p>
+            </div>
+        </div>
+
+        <p class="mt-6 text-center text-sm text-slate-500">
+            Secure access restricted to authorized personnel only.
+        </p>
+    </div>
+
+    <script>
+        function fillDemoCredentials() {
+            document.getElementById('Email').value = 'admin@erp.local';
+            document.getElementById('Password').value = 'Admin@123456';
+            document.getElementById('demo-hint').classList.remove('hidden');
+            // Animate the sign-in button to draw attention
+            var btn = document.getElementById('btn-signin');
+            btn.classList.add('ring-2', 'ring-amber-400', 'ring-offset-2', 'ring-offset-slate-900');
+            setTimeout(function() { btn.classList.remove('ring-2', 'ring-amber-400', 'ring-offset-2', 'ring-offset-slate-900'); }, 2000);
+        }
+    </script>
+</body>
+</html>

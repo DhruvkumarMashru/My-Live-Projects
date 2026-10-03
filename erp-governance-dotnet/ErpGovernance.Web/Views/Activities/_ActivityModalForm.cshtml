@@ -1,0 +1,106 @@
+@model ErpGovernance.Application.DTOs.ActivityFormDto
+@{
+    var isEdit = Model.Id > 0;
+}
+
+<form asp-action="Save" asp-controller="Activities" method="post" class="space-y-4">
+    @if(isEdit) { <input type="hidden" asp-for="Id" /> }
+    <input type="hidden" asp-for="ChecklistId" />
+    <input type="hidden" asp-for="MigrateCommunicationId" />
+    
+    <div asp-validation-summary="ModelOnly" class="text-xs text-rose-600 bg-rose-50 rounded-lg p-2.5"></div>
+
+    <div class="space-y-4">
+        <div>
+            <label asp-for="Title" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">Title <span class="text-rose-500">*</span></label>
+            <input asp-for="Title" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm py-2 px-3 border" placeholder="Enter activity title" required />
+            <span asp-validation-for="Title" class="text-xs text-rose-500"></span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label asp-for="ActivityType" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">Activity Type</label>
+                <select asp-for="ActivityType" asp-items="Html.GetEnumSelectList<ErpGovernance.Domain.Enums.ActivityType>()" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm py-2 px-3 border bg-white"></select>
+            </div>
+            <div>
+                <label asp-for="Status" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">Status</label>
+                <select asp-for="Status" asp-items="Html.GetEnumSelectList<ErpGovernance.Domain.Enums.ItemStatus>()" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm py-2 px-3 border bg-white"></select>
+            </div>
+        </div>
+
+        <div>
+            <label asp-for="Description" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">Description / Instructions</label>
+            <textarea asp-for="Description" rows="2" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm py-2 px-3 border" placeholder="Provide description..."></textarea>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label asp-for="Priority" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">Priority</label>
+                <select asp-for="Priority" asp-items="Html.GetEnumSelectList<ErpGovernance.Domain.Enums.Priority>()" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm py-2 px-3 border bg-white"></select>
+            </div>
+            <div>
+                <label asp-for="ProgressPercentage" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">Progress (%)</label>
+                <input asp-for="ProgressPercentage" type="number" min="0" max="100" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm py-2 px-3 border" />
+                <span asp-validation-for="ProgressPercentage" class="text-xs text-rose-500"></span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label asp-for="AssignedUserId" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">Assign To (User)</label>
+                <select asp-for="AssignedUserId" asp-items="ViewBag.Users" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm py-2 px-3 border bg-white">
+                    <option value="">-- Unassigned --</option>
+                </select>
+            </div>
+            <div>
+                <label asp-for="ResponsibleTeam" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">Responsible Team</label>
+                <input asp-for="ResponsibleTeam" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm py-2 px-3 border" placeholder="External or team name" />
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label asp-for="ActualStartDateTime" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">Actual Start</label>
+                <input asp-for="ActualStartDateTime" type="datetime-local" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm py-2 px-3 border" />
+            </div>
+            <div>
+                <label asp-for="ActualEndDateTime" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">Actual End</label>
+                <input asp-for="ActualEndDateTime" type="datetime-local" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm py-2 px-3 border" />
+            </div>
+        </div>
+
+        <div class="border-t border-slate-100 pt-3">
+            <h4 class="text-xs font-bold text-slate-800 mb-2 uppercase tracking-wide">Meeting & Follow-up Details</h4>
+            
+            <div class="space-y-3">
+                <div>
+                    <label asp-for="Participants" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">Participants</label>
+                    <input asp-for="Participants" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm py-2 px-3 border" placeholder="Comma separated list" />
+                </div>
+                <div>
+                    <label asp-for="MeetingNotes" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">Meeting Notes</label>
+                    <textarea asp-for="MeetingNotes" rows="2" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm py-2 px-3 border" placeholder="Notes..."></textarea>
+                </div>
+                <div>
+                    <label asp-for="Outcome" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">Outcome</label>
+                    <textarea asp-for="Outcome" rows="1" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm py-2 px-3 border" placeholder="Resolution..."></textarea>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label asp-for="NextFollowupDate" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">Next Follow-up</label>
+                        <input asp-for="NextFollowupDate" type="date" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm py-2 px-3 border" />
+                    </div>
+                    <div>
+                        <label asp-for="EscalationStatus" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">Escalation</label>
+                        <input asp-for="EscalationStatus" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm py-2 px-3 border" placeholder="none" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pt-4 flex justify-end gap-2 border-t border-slate-100">
+        <button type="button" onclick="closeErpModal()" class="bg-white py-2 px-4 border border-slate-300 rounded-md shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors">Cancel</button>
+        <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors">Save</button>
+    </div>
+</form>

@@ -1,0 +1,78 @@
+@model List<ErpGovernance.Application.DTOs.ModuleListDto>
+@{
+    ViewData["Title"] = "Modules";
+    ViewData["ActiveNav"] = "Projects";
+    var projectId = ViewBag.ProjectId;
+}
+
+<div class="mb-6 flex justify-between items-center">
+    <div>
+        <a href="/Projects" class="text-sm font-medium text-indigo-600 hover:text-indigo-800 mb-2 inline-block">&larr; Back to Projects</a>
+        <h2 class="text-2xl font-bold text-slate-800">Modules</h2>
+        <p class="text-sm text-slate-500 mt-1">Level 1: Highest level functional blocks of the ERP.</p>
+    </div>
+    <a href="/Hierarchy/ModuleCreate?projectId=@projectId" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition-colors">
+        <svg class="-ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
+        Add Module
+    </a>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+    <table class="min-w-full divide-y divide-slate-200">
+        <thead class="bg-slate-50">
+            <tr>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Module Name</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Status</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Priority</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Progress</th>
+                <th class="px-6 py-4 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-slate-200">
+            @if (!Model.Any()) {
+                <tr><td colspan="5" class="px-6 py-8 text-center text-slate-500">No modules created yet.</td></tr>
+            }
+            @foreach (var m in Model)
+            {
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-bold text-slate-900">@m.Name</div>
+                        <div class="text-xs text-slate-500 mt-1">Groups: @m.SubModuleGroupCount</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="@ErpGovernance.Web.Helpers.DisplayHelpers.StatusBadgeClass(m.Status.ToString().ToLower())">@ErpGovernance.Web.Helpers.DisplayHelpers.StatusLabel(m.Status.ToString().ToLower())</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="@ErpGovernance.Web.Helpers.DisplayHelpers.PriorityBadgeClass(m.Priority.ToString().ToLower())">@m.Priority</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <div class="w-24 bg-slate-200 rounded-full h-2 mr-3 overflow-hidden shadow-inner">
+                                <div class="@ErpGovernance.Web.Helpers.DisplayHelpers.ProgressColorClass(m.ProgressPercentage) h-2 rounded-full" style="width: @m.ProgressPercentage%"></div>
+                            </div>
+                            <span class="text-xs font-bold text-slate-700">@m.ProgressPercentage%</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <div class="flex items-center justify-end gap-2">
+                            <a href="/Hierarchy/SubModuleGroups?moduleId=@m.Id" class="inline-flex items-center px-3 py-1.5 border border-slate-300 text-xs font-medium rounded text-slate-700 bg-white hover:bg-slate-50 transition-colors">
+                                Manage Groups &rarr;
+                            </a>
+                            <a href="/Hierarchy/ModuleEdit/@m.Id" class="inline-flex items-center px-2.5 py-1.5 border border-amber-300 text-xs font-medium rounded text-amber-700 bg-amber-50 hover:bg-amber-100 transition-colors">
+                                <svg class="w-3.5 h-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                Edit
+                            </a>
+                            <form method="post" action="/Hierarchy/ModuleDelete/@m.Id" class="inline" onsubmit="return confirm('Delete module @Html.Raw(m.Name.Replace("'","\\'")))? This cannot be undone.')">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="inline-flex items-center px-2.5 py-1.5 border border-rose-300 text-xs font-medium rounded text-rose-700 bg-rose-50 hover:bg-rose-100 transition-colors">
+                                    <svg class="w-3.5 h-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

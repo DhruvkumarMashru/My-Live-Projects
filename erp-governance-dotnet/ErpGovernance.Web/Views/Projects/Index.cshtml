@@ -1,0 +1,94 @@
+@model List<ErpGovernance.Application.DTOs.ProjectListDto>
+@{
+    ViewData["Title"] = "Projects";
+    ViewData["ActiveNav"] = "Projects";
+}
+
+@using ErpGovernance.Application.Constants
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+
+<div class="mb-6 flex justify-between items-center">
+    <div>
+        <h2 class="text-2xl font-bold text-slate-800">Project Portfolio</h2>
+        <p class="text-sm text-slate-500 mt-1">Manage and monitor all your ERP governance projects.</p>
+    </div>
+    @if ((await AuthorizationService.AuthorizeAsync(User, Permissions.Projects.Create)).Succeeded)
+    {
+        <a href="/Projects/Create" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+            <svg class="-ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            New Project
+        </a>
+    }
+</div>
+
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-slate-200">
+            <thead class="bg-slate-50">
+                <tr>
+                    <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Project</th>
+                    <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Organization</th>
+                    <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Status</th>
+                    <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Progress</th>
+                    <th scope="col" class="px-6 py-4 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-slate-200">
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="5" class="px-6 py-10 text-center text-slate-500 text-sm">
+                            No projects found. Click "New Project" to get started.
+                        </td>
+                    </tr>
+                }
+                @foreach (var p in Model)
+                {
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex flex-col">
+                                <span class="text-sm font-bold text-slate-900">@p.Name</span>
+                                <div class="text-xs text-slate-500 mt-1 flex items-center space-x-2">
+                                    <span class="bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded font-mono">@p.Code</span>
+                                    <span>Due: @ErpGovernance.Web.Helpers.DisplayHelpers.FormatDate(p.ExpectedEndDate)</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-slate-700">@p.OrganizationName</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="@ErpGovernance.Web.Helpers.DisplayHelpers.StatusBadgeClass(p.Status.ToString().ToLower())">
+                                @ErpGovernance.Web.Helpers.DisplayHelpers.StatusLabel(p.Status.ToString().ToLower())
+                            </span>
+                            <span class="ml-2 @ErpGovernance.Web.Helpers.DisplayHelpers.PriorityBadgeClass(p.Priority.ToString().ToLower())">
+                                @p.Priority
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <div class="w-24 bg-slate-200 rounded-full h-2 mr-3 overflow-hidden shadow-inner">
+                                    <div class="@ErpGovernance.Web.Helpers.DisplayHelpers.ProgressColorClass(p.ProgressPercentage) h-2 rounded-full" style="width: @p.ProgressPercentage%"></div>
+                                </div>
+                                <span class="text-xs font-bold text-slate-700">@p.ProgressPercentage%</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <div class="flex justify-end space-x-3">
+                                <a href="/Hierarchy/Modules?projectId=@p.Id" class="text-indigo-600 hover:text-indigo-900" title="Manage Modules">
+                                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                                </a>
+                                <a href="/Projects/Edit/@p.Id" class="text-slate-400 hover:text-slate-700" title="Edit Project">
+                                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,531 @@
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+<meta charset="utf-8">
+<title>ERP Governance Platform – Full User Manual</title>
+<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom><w:DoNotOptimizeForBrowser/></w:WordDocument></xml><![endif]-->
+<style>
+  @page { margin: 2.54cm; }
+  body { font-family: Calibri, Arial, sans-serif; font-size: 11pt; line-height: 1.6; color: #1a1a1a; }
+  h1 { font-size: 26pt; color: #1B3A6B; text-align: center; border-bottom: 3px solid #1B3A6B; padding-bottom: 8px; margin-top: 0; }
+  h2 { font-size: 18pt; color: #1B3A6B; border-bottom: 2px solid #3B82F6; padding-bottom: 4px; margin-top: 30px; page-break-before: always; }
+  h2.no-break { page-break-before: avoid; }
+  h3 { font-size: 14pt; color: #2563EB; margin-top: 20px; }
+  h4 { font-size: 12pt; color: #1e40af; margin-top: 14px; font-style: italic; }
+  p { margin: 8px 0; text-align: justify; }
+  ul, ol { margin: 8px 0 8px 24px; }
+  li { margin-bottom: 5px; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 10pt; }
+  th { background-color: #1B3A6B; color: white; padding: 8px 10px; text-align: left; }
+  td { border: 1px solid #CBD5E1; padding: 7px 10px; vertical-align: top; }
+  tr:nth-child(even) td { background-color: #F1F5F9; }
+  .cover-block { text-align: center; margin: 60px 0; }
+  .cover-block p { font-size: 13pt; color: #475569; }
+  .info-box { background-color: #EFF6FF; border-left: 5px solid #3B82F6; padding: 12px 16px; margin: 14px 0; }
+  .warning-box { background-color: #FFF7ED; border-left: 5px solid #F97316; padding: 12px 16px; margin: 14px 0; }
+  .success-box { background-color: #F0FDF4; border-left: 5px solid #22C55E; padding: 12px 16px; margin: 14px 0; }
+  .step-box { background-color: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 4px; padding: 14px 18px; margin: 12px 0; }
+  .step-box strong { color: #1B3A6B; }
+  code { background-color: #F1F5F9; padding: 1px 5px; font-family: Consolas, monospace; font-size: 10pt; color: #DC2626; }
+  .toc { margin: 30px 0; }
+  .toc a { color: #1B3A6B; text-decoration: none; }
+  .toc p { margin: 4px 0; }
+  .toc .toc-1 { font-weight: bold; font-size: 12pt; margin-top: 8px; }
+  .toc .toc-2 { margin-left: 20px; font-size: 11pt; }
+  .toc .toc-3 { margin-left: 40px; font-size: 10pt; color: #475569; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 9pt; font-weight: bold; }
+  .badge-green { background: #DCFCE7; color: #166534; }
+  .badge-blue { background: #DBEAFE; color: #1e40af; }
+  .badge-yellow { background: #FEF9C3; color: #854D0E; }
+  .badge-red { background: #FEE2E2; color: #991B1B; }
+  .badge-purple { background: #F3E8FF; color: #6B21A8; }
+  hr { border: none; border-top: 1px solid #E2E8F0; margin: 20px 0; }
+  .footer-note { font-size: 9pt; color: #94A3B8; text-align: center; margin-top: 40px; }
+</style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover-block">
+  <br><br><br>
+  <h1>ERP Governance Platform</h1>
+  <p style="font-size:18pt; color:#1B3A6B; font-weight:bold;">Complete User Manual</p>
+  <br>
+  <p>Step-by-Step Guide &amp; Security Framework</p>
+  <p>Includes: Login, Administration, Projects, Activities, Reports &amp; RBAC</p>
+  <br><br><br>
+  <p style="font-size:9pt; color:#94A3B8;">Version 1.0 &nbsp;|&nbsp; Confidential &nbsp;|&nbsp; Internal Distribution Only</p>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<h2 class="no-break" style="page-break-before:always;">Table of Contents</h2>
+<div class="toc">
+  <p class="toc-1">1. System Overview</p>
+  <p class="toc-1">2. Getting Started – First Login</p>
+  <p class="toc-2">2.1 Login Page</p>
+  <p class="toc-2">2.2 Default Admin Credentials</p>
+  <p class="toc-2">2.3 Dashboard Overview</p>
+  <p class="toc-1">3. Administration Setup</p>
+  <p class="toc-2">3.1 Creating an Organization</p>
+  <p class="toc-2">3.2 Managing Roles &amp; Permissions (RBAC)</p>
+  <p class="toc-2">3.3 Creating Users</p>
+  <p class="toc-1">4. Project Management</p>
+  <p class="toc-2">4.1 Creating a Project</p>
+  <p class="toc-2">4.2 The 5-Level Hierarchy</p>
+  <p class="toc-2">4.3 Manual Hierarchy Creation</p>
+  <p class="toc-2">4.4 Bulk CSV Import</p>
+  <p class="toc-1">5. Activities &amp; Daily Operations</p>
+  <p class="toc-2">5.1 Adding an Activity</p>
+  <p class="toc-2">5.2 Automatic Progress Roll-up</p>
+  <p class="toc-1">6. Reports &amp; Monitoring</p>
+  <p class="toc-2">6.1 Dashboard</p>
+  <p class="toc-2">6.2 Progress Report</p>
+  <p class="toc-2">6.3 Delayed Items</p>
+  <p class="toc-2">6.4 Responsibility Matrix</p>
+  <p class="toc-1">7. Audit Logs</p>
+  <p class="toc-1">8. Role-Based Access Control (RBAC) Guide</p>
+  <p class="toc-2">8.1 How the Permission Engine Works</p>
+  <p class="toc-2">8.2 Default System Roles</p>
+  <p class="toc-2">8.3 Creating a Custom Role – Example</p>
+  <p class="toc-2">8.4 Granting / Revoking Permissions</p>
+  <p class="toc-2">8.5 Role Audit Trail</p>
+  <p class="toc-1">9. Viewing the Database (SQL)</p>
+  <p class="toc-1">10. Troubleshooting &amp; FAQ</p>
+</div>
+
+<!-- SECTION 1 -->
+<h2>1. System Overview</h2>
+<p>The <strong>ERP Governance Platform</strong> is a web-based project monitoring and governance tool built on .NET 10 with SQL Server. It is designed to track complex, multi-level ERP implementations across organizations with full traceability, role-based security, and real-time progress metrics.</p>
+
+<table>
+  <tr><th>Feature</th><th>Description</th></tr>
+  <tr><td>Server Address</td><td><code>http://localhost:5297</code></td></tr>
+  <tr><td>Database</td><td>SQL Server LocalDB — <code>ErpGovernanceDb</code></td></tr>
+  <tr><td>Authentication</td><td>ASP.NET Core Identity (email + password)</td></tr>
+  <tr><td>Authorization</td><td>Dynamic Claims-based RBAC (Policy engine)</td></tr>
+  <tr><td>Default Admin Email</td><td><code>admin@erp.local</code></td></tr>
+  <tr><td>Default Admin Password</td><td><code>Admin@123456</code></td></tr>
+</table>
+
+<div class="success-box">
+  <strong>✅ Server Status:</strong> The server starts successfully with 0 errors. All views and routes are loaded. The database auto-migrates and seeds the Super Admin account on first launch.
+</div>
+
+<!-- SECTION 2 -->
+<h2>2. Getting Started – First Login</h2>
+
+<h3>2.1 Login Page</h3>
+<p>When you open your browser and navigate to <code>http://localhost:5297</code>, the system automatically redirects you to the Login page because all routes require authentication.</p>
+
+<div class="step-box">
+  <strong>Step-by-Step: Logging In</strong>
+  <ol>
+    <li>Open your browser (Chrome, Edge, or Firefox).</li>
+    <li>Go to: <code>http://localhost:5297</code></li>
+    <li>You will be redirected to: <code>http://localhost:5297/Account/Login</code></li>
+    <li>Enter your email and password.</li>
+    <li>Click the <strong>Sign In</strong> button.</li>
+    <li>You are now on the <strong>Dashboard</strong>.</li>
+  </ol>
+</div>
+
+<h3>2.2 Default Admin Credentials</h3>
+<div class="info-box">
+  The system automatically seeds a Super Admin account the very first time it starts if no users exist in the database.
+</div>
+<table>
+  <tr><th>Field</th><th>Value</th></tr>
+  <tr><td><strong>Email</strong></td><td><code>admin@erp.local</code></td></tr>
+  <tr><td><strong>Password</strong></td><td><code>Admin@123456</code></td></tr>
+  <tr><td><strong>Role</strong></td><td>Super Admin (full access to everything)</td></tr>
+</table>
+<div class="warning-box">
+  <strong>⚠ Important:</strong> Change the default admin password immediately after your first login by going to <strong>Account → Profile → Change Password</strong>.
+</div>
+
+<h3>2.3 Dashboard Overview</h3>
+<p>After logging in, you land on the <strong>Dashboard</strong>. The dashboard shows:</p>
+<ul>
+  <li><strong>Summary Cards:</strong> Total Projects, Total Modules, Delayed Items, Completed Checklists.</li>
+  <li><strong>Project Tree:</strong> An expandable view of all projects down to the Checklist level.</li>
+  <li><strong>Progress Indicators:</strong> Real-time percentage bars showing completion for each project.</li>
+</ul>
+
+<!-- SECTION 3 -->
+<h2>3. Administration Setup</h2>
+<p>Before creating projects, you should set up organizations, roles, and users. All administration menus are available in the left sidebar under the <strong>Administration</strong> heading — but only if your role has the required permissions.</p>
+
+<h3>3.1 Creating an Organization</h3>
+<p>Organizations represent companies, client businesses, or internal departments that sponsor ERP projects.</p>
+<div class="step-box">
+  <strong>Example: Add "Acme Manufacturing Ltd."</strong>
+  <ol>
+    <li>Click <strong>Organizations</strong> in the left sidebar.</li>
+    <li>Click <strong>Create New Organization</strong> (top right).</li>
+    <li>Fill in:
+      <ul>
+        <li><strong>Name:</strong> Acme Manufacturing Ltd.</li>
+        <li><strong>Code:</strong> AML-001 (unique short code)</li>
+        <li><strong>Address:</strong> 12, Industrial Estate, Mumbai</li>
+        <li><strong>Active:</strong> ✓ (checked)</li>
+      </ul>
+    </li>
+    <li>Click <strong>Save</strong>.</li>
+    <li>You will see a green success message: "Organization created successfully."</li>
+  </ol>
+</div>
+
+<h3>3.2 Managing Roles &amp; Permissions (RBAC)</h3>
+<p>The system uses a fully dynamic permission engine. You can create any number of custom roles and assign specific permissions to each role from the UI — no code changes required.</p>
+<div class="step-box">
+  <strong>Example: Create an "External Auditor" Role with View-only Access</strong>
+  <ol>
+    <li>Click <strong>Roles &amp; Permissions</strong> in the sidebar.</li>
+    <li>Click <strong>Create New Role</strong>.</li>
+    <li>Enter Role Name: <code>External Auditor</code> → click Save.</li>
+    <li>Back on the Roles list, click <strong>Permissions</strong> next to "External Auditor".</li>
+    <li>The Permission Matrix grid appears, grouped by module.</li>
+    <li>Check ONLY the following:
+      <ul>
+        <li>Projects → <strong>View</strong></li>
+        <li>Reports → <strong>View</strong></li>
+        <li>Dashboard → <strong>View</strong></li>
+      </ul>
+    </li>
+    <li>Leave all <strong>Create, Edit, Delete</strong> boxes <strong>unchecked</strong>.</li>
+    <li>Click <strong>Save All Permissions</strong>.</li>
+  </ol>
+</div>
+<div class="info-box">
+  <strong>Result:</strong> When someone logs in with the External Auditor role, the system hides the Administration section, the Bulk Import link, and all "Create", "Edit", "Delete" buttons are programmatically removed from every page they visit.
+</div>
+
+<h3>3.3 Creating Users</h3>
+<p>Users are people who will log in and use the platform. Each user belongs to one Organization and has one System Role.</p>
+<div class="step-box">
+  <strong>Example: Create a Project Manager for Acme</strong>
+  <ol>
+    <li>Click <strong>Users</strong> in the sidebar.</li>
+    <li>Click <strong>Create New User</strong>.</li>
+    <li>Fill in:
+      <ul>
+        <li><strong>Full Name:</strong> Rajesh Kumar</li>
+        <li><strong>Email:</strong> rajesh@acme.local</li>
+        <li><strong>System Role:</strong> project_manager</li>
+        <li><strong>Organization:</strong> Acme Manufacturing Ltd.</li>
+        <li><strong>Department:</strong> IT</li>
+        <li><strong>Password:</strong> (set a secure password, min 8 chars, 1 uppercase)</li>
+      </ul>
+    </li>
+    <li>Click <strong>Save</strong>.</li>
+    <li>Rajesh can now log in at <code>http://localhost:5297/Account/Login</code>.</li>
+  </ol>
+</div>
+
+<!-- SECTION 4 -->
+<h2>4. Project Management</h2>
+
+<h3>4.1 Creating a Project</h3>
+<div class="step-box">
+  <strong>Example: Create "SAP S/4HANA Implementation – Acme Phase 1"</strong>
+  <ol>
+    <li>Click <strong>Projects</strong> in the sidebar.</li>
+    <li>Click <strong>New Project</strong> (top right — only visible if you have Create permission).</li>
+    <li>Fill in the form:
+      <ul>
+        <li><strong>Project Name:</strong> SAP S/4HANA Implementation – Acme Phase 1</li>
+        <li><strong>Code:</strong> SAP-ACM-2025</li>
+        <li><strong>Organization:</strong> Acme Manufacturing Ltd.</li>
+        <li><strong>Status:</strong> In Progress</li>
+        <li><strong>Priority:</strong> High</li>
+        <li><strong>Expected Start Date:</strong> 01/06/2025</li>
+        <li><strong>Expected End Date:</strong> 31/12/2025</li>
+        <li><strong>Project Managers:</strong> Select "Rajesh Kumar"</li>
+      </ul>
+    </li>
+    <li>Click <strong>Save</strong>.</li>
+  </ol>
+</div>
+
+<h3>4.2 The 5-Level Hierarchy</h3>
+<p>Every project in this system is broken into a structured 5-level hierarchy for granular tracking:</p>
+<table>
+  <tr><th>Level</th><th>Name</th><th>Example</th></tr>
+  <tr><td>1</td><td><strong>Project</strong></td><td>SAP S/4HANA Implementation – Acme Phase 1</td></tr>
+  <tr><td>2</td><td><strong>Module</strong></td><td>Finance (FICO)</td></tr>
+  <tr><td>3</td><td><strong>SubModule Group</strong></td><td>Accounts Payable</td></tr>
+  <tr><td>4</td><td><strong>SubModule</strong></td><td>Vendor Invoicing</td></tr>
+  <tr><td>5</td><td><strong>Checklist</strong></td><td>Configure Vendor Master Data</td></tr>
+</table>
+
+<h3>4.3 Manual Hierarchy Creation</h3>
+<div class="step-box">
+  <strong>Step-by-Step: Add a Module</strong>
+  <ol>
+    <li>Click on your project name from the Projects list.</li>
+    <li>Click <strong>Add Module</strong>.</li>
+    <li>Name: <code>Finance (FICO)</code> → Save.</li>
+    <li>Click on "Finance (FICO)" → Click <strong>Add SubModule Group</strong>.</li>
+    <li>Name: <code>Accounts Payable</code> → Save.</li>
+    <li>Click on "Accounts Payable" → Click <strong>Add SubModule</strong>.</li>
+    <li>Name: <code>Vendor Invoicing</code> → Save.</li>
+    <li>Click on "Vendor Invoicing" → Click <strong>Add Checklist</strong>.</li>
+    <li>Name: <code>Configure Vendor Master Data</code> → Save.</li>
+  </ol>
+</div>
+
+<h3>4.4 Bulk CSV Import (Recommended for Large Projects)</h3>
+<p>Instead of manually clicking to create hundreds of modules, you can import the entire work breakdown structure from a single CSV file.</p>
+<div class="step-box">
+  <strong>Step-by-Step: Import via CSV</strong>
+  <ol>
+    <li>Click <strong>Bulk Import</strong> in the sidebar.</li>
+    <li>Select your target <strong>Project</strong> from the dropdown.</li>
+    <li>Prepare a CSV file with these 16 columns:<br>
+      <code>ModuleName, ModuleDescription, SubModuleGroupName, SubModuleGroupDescription, SubModuleName, SubModuleDescription, ChecklistName, ChecklistDescription, ExpectedStartDate, ExpectedEndDate, ActualStartDate, ActualEndDate, Status, Priority, ProgressPercentage, Remarks</code>
+    </li>
+    <li>Upload the CSV file.</li>
+    <li>Click <strong>Import</strong>.</li>
+    <li>The system reports exactly how many Modules, SubModule Groups, SubModules, and Checklists were created or updated.</li>
+  </ol>
+</div>
+<div class="info-box">
+  <strong>Tip:</strong> Set <strong>Update Existing = true</strong> if you want re-imported rows to overwrite existing records with the same names. Leave it false to only create new ones.
+</div>
+
+<!-- SECTION 5 -->
+<h2>5. Activities &amp; Daily Operations</h2>
+
+<h3>5.1 Adding an Activity</h3>
+<p>Activities are the actual work items your team executes. They live at the Checklist level and are assigned to individual users.</p>
+<div class="step-box">
+  <strong>Example: Log a Requirements Workshop Activity</strong>
+  <ol>
+    <li>Navigate: Projects → SAP S/4HANA → Finance (FICO) → Accounts Payable → Vendor Invoicing → Configure Vendor Master Data.</li>
+    <li>Click <strong>Add Activity</strong>.</li>
+    <li>Fill in:
+      <ul>
+        <li><strong>Title:</strong> Vendor Requirements Workshop</li>
+        <li><strong>Activity Type:</strong> Workshop</li>
+        <li><strong>Assigned User:</strong> Rajesh Kumar</li>
+        <li><strong>Status:</strong> Not Started</li>
+        <li><strong>Priority:</strong> High</li>
+        <li><strong>Expected Start:</strong> 05/06/2025</li>
+        <li><strong>Expected End:</strong> 07/06/2025</li>
+      </ul>
+    </li>
+    <li>Click <strong>Save Activity</strong>.</li>
+  </ol>
+</div>
+
+<h3>5.2 Automatic Progress Roll-up</h3>
+<p>You <strong>never manually calculate progress</strong> in this system. When a team member updates an Activity's status to "Completed", a chain of automatic calculations fires instantly:</p>
+<table>
+  <tr><th>Level</th><th>What Happens</th></tr>
+  <tr><td>Activity → <strong>Checklist</strong></td><td>Checklist progress % = average of all its Activities' progress</td></tr>
+  <tr><td>Checklist → <strong>SubModule</strong></td><td>SubModule progress % = average of all its Checklists</td></tr>
+  <tr><td>SubModule → <strong>SubModule Group</strong></td><td>SubModule Group progress % = average of its SubModules</td></tr>
+  <tr><td>SubModule Group → <strong>Module</strong></td><td>Module progress % = average of its SubModule Groups</td></tr>
+  <tr><td>Module → <strong>Project</strong></td><td>Project progress % = average of all Modules</td></tr>
+</table>
+<div class="success-box">
+  <strong>Example:</strong> Rajesh marks the "Vendor Requirements Workshop" as 100% complete. Within seconds, the Dashboard shows that "Configure Vendor Master Data" checklist is now 100%, and the overall Project progress bar moves up automatically.
+</div>
+
+<!-- SECTION 6 -->
+<h2>6. Reports &amp; Monitoring</h2>
+
+<h3>6.1 Dashboard</h3>
+<p>Navigate to <strong>Dashboard</strong> at any time for an at-a-glance health check of all projects.</p>
+<ul>
+  <li>Filter by Organization or specific Project using the dropdowns at the top.</li>
+  <li>Expand the project tree by clicking on a project name to drill down visually.</li>
+  <li>Summary cards at the top always show real-time counts.</li>
+</ul>
+
+<h3>6.2 Progress Report</h3>
+<ul>
+  <li>Go to <strong>Reports → Progress Report</strong>.</li>
+  <li>See a full flat table of every item (Module, SubModule, Checklist) with its status, priority, and progress percentage.</li>
+  <li>Filter by Organization or Project.</li>
+</ul>
+
+<h3>6.3 Delayed Items Report</h3>
+<ul>
+  <li>Go to <strong>Reports → Delayed Items</strong>.</li>
+  <li>This report automatically shows every Activity or Checklist whose <strong>Expected End Date has passed</strong> but is not yet marked Completed.</li>
+  <li>The <strong>"Days Delayed"</strong> column shows exactly how many days overdue each item is.</li>
+</ul>
+
+<h3>6.4 Responsibility Matrix</h3>
+<ul>
+  <li>Go to <strong>Reports → Responsibility Matrix</strong>.</li>
+  <li>See a flat list of all Activities grouped by the assigned user.</li>
+  <li>Instantly identify who has the most overdue or pending tasks.</li>
+</ul>
+
+<!-- SECTION 7 -->
+<h2>7. Audit Logs</h2>
+<p>The Audit Logs module is a comprehensive, tamper-evident record of every significant action in the system.</p>
+<div class="step-box">
+  <strong>How to Access:</strong>
+  <ol>
+    <li>Click <strong>Audit Logs</strong> in the sidebar (visible only to Super Admin).</li>
+    <li>Filter logs by Entity Type (e.g., "AppUser", "Project", "Organization") or by Action Type (e.g., "create", "update", "Granted", "Revoked").</li>
+  </ol>
+</div>
+<table>
+  <tr><th>What Is Logged</th><th>Example Log Entry</th></tr>
+  <tr><td>User Login</td><td>"User admin@erp.local logged in" — 21 May 2025, 10:05 AM</td></tr>
+  <tr><td>Organization Created</td><td>"Created org: Acme Manufacturing Ltd." — by Super Admin</td></tr>
+  <tr><td>Role Granted to User</td><td>"Granted role 'project_manager' to rajesh@acme.local"</td></tr>
+  <tr><td>Role Revoked from User</td><td>"Revoked role 'erp_team' from john@acme.local"</td></tr>
+  <tr><td>Permission Changed</td><td>"Granted: Permissions.Projects.Create to role External Auditor"</td></tr>
+  <tr><td>Project Created</td><td>"Created project: SAP S/4HANA Implementation – Acme Phase 1"</td></tr>
+</table>
+<div class="info-box">
+  <strong>Note:</strong> Audit log entries are permanent and cannot be deleted from the UI, ensuring a fully trustworthy security trail.
+</div>
+
+<!-- SECTION 8 -->
+<h2>8. Role-Based Access Control (RBAC) Guide</h2>
+
+<h3>8.1 How the Permission Engine Works</h3>
+<p>This platform does not use simple role checks. Instead, it uses a <strong>dynamic Claims-based Permission Engine</strong>. Each permission is a specific string claim (e.g., <code>Permissions.Projects.Create</code>) stored directly in the database against a role. The UI and all API endpoints evaluate these claims in real-time — the interface literally morphs to match what each user is allowed to do.</p>
+
+<h3>8.2 Default System Roles</h3>
+<table>
+  <tr><th>Role Name</th><th>Who Should Have This</th><th>What They Can Do</th></tr>
+  <tr>
+    <td><span class="badge badge-red">super_admin</span></td>
+    <td>System Owner / IT Admin</td>
+    <td>Everything. Bypasses all permission checks. Can view Audit Logs, manage Organizations, Roles, and Users across all organizations.</td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-purple">project_hod</span></td>
+    <td>Head of Department / Client Lead</td>
+    <td>Sees all Projects and Users in their own Organization only. Can manage project structure. Cannot see other organizations' data.</td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-blue">project_manager</span></td>
+    <td>Project Managers</td>
+    <td>Can view and edit only the specific Projects they are assigned to manage. Can build project hierarchy and create activities.</td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-yellow">erp_team</span></td>
+    <td>ERP Consultants / Team Members</td>
+    <td>Can log in, view the project hierarchy, and execute Activities. Can update status and progress of assigned activities.</td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-green">viewer</span></td>
+    <td>Executives / External Stakeholders</td>
+    <td>Read-only access. Can view Dashboard and Reports. All "Create", "Edit", "Delete" buttons are completely hidden from their view.</td>
+  </tr>
+</table>
+
+<h3>8.3 Creating a Custom Role – Full Example</h3>
+<div class="step-box">
+  <strong>Scenario:</strong> You want to create a "Finance Reviewer" role that can view Projects and submit Reports but cannot create or delete anything.
+  <ol>
+    <li>Go to <strong>Roles &amp; Permissions</strong> → <strong>Create New Role</strong>.</li>
+    <li>Enter name: <code>Finance Reviewer</code> → Save.</li>
+    <li>Click <strong>Permissions</strong> next to "Finance Reviewer".</li>
+    <li>In the Permission Matrix, check:
+      <ul>
+        <li>Projects → <strong>View</strong> ✓</li>
+        <li>Hierarchy → <strong>View</strong> ✓</li>
+        <li>Activities → <strong>View</strong> ✓</li>
+        <li>Reports → <strong>View</strong> ✓</li>
+      </ul>
+    </li>
+    <li>Leave all Create / Edit / Delete boxes unchecked.</li>
+    <li>Click <strong>Save All Permissions</strong>.</li>
+    <li>Now create or edit a User and assign them the <strong>Finance Reviewer</strong> role.</li>
+  </ol>
+</div>
+
+<h3>8.4 Granting / Revoking Permissions</h3>
+<ul>
+  <li>To <strong>grant</strong> a permission: check the box in the Permissions matrix and save. The system immediately logs this in Audit Logs.</li>
+  <li>To <strong>revoke</strong> a permission: uncheck the box and save. Again, immediately audited.</li>
+  <li>To change a user's role entirely: go to Users → Edit User → change the System Role dropdown → Save. The old role is revoked and the new one granted, both recorded in Audit Logs with timestamp and actor.</li>
+</ul>
+
+<h3>8.5 Role Audit Trail</h3>
+<p>Every single role and permission change generates an automatic entry in the Audit Logs table with:</p>
+<ul>
+  <li>Who made the change (the admin user's ID and name)</li>
+  <li>What changed (e.g., "Granted role 'project_manager' to john@acme.local")</li>
+  <li>When it happened (exact UTC timestamp)</li>
+  <li>The IP address of the admin who made the change</li>
+</ul>
+
+<!-- SECTION 9 -->
+<h2>9. Viewing the Database (SQL Server)</h2>
+<p>Your database is: <code>ErpGovernanceDb</code> on the local SQL Server instance <code>(localdb)\mssqllocaldb</code>.</p>
+<div class="step-box">
+  <strong>Option A: Using SQL Server Management Studio (SSMS)</strong>
+  <ol>
+    <li>Open <strong>SQL Server Management Studio</strong>.</li>
+    <li>In "Connect to Server", enter Server Name: <code>(localdb)\mssqllocaldb</code></li>
+    <li>Authentication: <strong>Windows Authentication</strong>.</li>
+    <li>Click <strong>Connect</strong>.</li>
+    <li>Expand: Databases → <strong>ErpGovernanceDb</strong> → Tables.</li>
+    <li>Right-click any table (e.g., <code>dbo.Users</code>) → <strong>Select Top 1000 Rows</strong> to view data.</li>
+  </ol>
+</div>
+<div class="step-box">
+  <strong>Option B: Using Visual Studio SQL Server Object Explorer</strong>
+  <ol>
+    <li>Open Visual Studio.</li>
+    <li>Go to <strong>View</strong> menu → <strong>SQL Server Object Explorer</strong>.</li>
+    <li>Expand: SQL Server → <code>(localdb)\MSSQLLocalDB</code> → Databases → <code>ErpGovernanceDb</code>.</li>
+  </ol>
+</div>
+<table>
+  <tr><th>Key Tables</th><th>What They Store</th></tr>
+  <tr><td><code>Users</code></td><td>All system users (name, email, organization)</td></tr>
+  <tr><td><code>Roles</code></td><td>All roles (super_admin, project_manager, custom roles)</td></tr>
+  <tr><td><code>RoleClaims</code></td><td>The dynamic permissions assigned to each role</td></tr>
+  <tr><td><code>UserRoles</code></td><td>Which user is in which role</td></tr>
+  <tr><td><code>Organizations</code></td><td>All registered organizations</td></tr>
+  <tr><td><code>Projects</code></td><td>All ERP projects</td></tr>
+  <tr><td><code>AuditLogs</code></td><td>Every security and data change event</td></tr>
+</table>
+
+<!-- SECTION 10 -->
+<h2>10. Troubleshooting &amp; FAQ</h2>
+<table>
+  <tr><th>Problem</th><th>Solution</th></tr>
+  <tr>
+    <td>Cannot log in</td>
+    <td>Use <code>admin@erp.local</code> / <code>Admin@123456</code>. Make sure the server is running (run <code>run_server.bat</code>).</td>
+  </tr>
+  <tr>
+    <td>Server won't start — "Framework not found"</td>
+    <td>The project targets .NET 10. Install .NET 10 Runtime from <a href="https://dotnet.microsoft.com">dotnet.microsoft.com</a>.</td>
+  </tr>
+  <tr>
+    <td>Can't see Administration menu</td>
+    <td>Your user's role does not have the required permission. Log in as super_admin or have an admin grant your role the needed permissions.</td>
+  </tr>
+  <tr>
+    <td>Migrations fail on startup</td>
+    <td>Ensure SQL Server LocalDB is installed and running. Open a Command Prompt and run: <code>sqllocaldb start mssqllocaldb</code></td>
+  </tr>
+  <tr>
+    <td>Forgot admin password</td>
+    <td>Open SSMS, connect to the database, delete the row from the <code>Users</code> table where Email = 'admin@erp.local'. Restart the server — it will re-seed the default admin with the original password.</td>
+  </tr>
+  <tr>
+    <td>CSV import fails</td>
+    <td>Ensure your CSV has exactly 16 columns with headers matching the required format. Check the error list shown in the import result screen for which rows failed.</td>
+  </tr>
+</table>
+
+<div class="footer-note">
+  <hr>
+  ERP Governance Platform – Full User Manual &nbsp;|&nbsp; Confidential Internal Document &nbsp;|&nbsp; v1.0
+</div>
+
+</body>
+</html>

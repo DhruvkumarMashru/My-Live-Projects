@@ -1,0 +1,64 @@
+@model IEnumerable<ErpGovernance.Application.DTOs.PendingItemDto>
+@using ErpGovernance.Web.Helpers
+
+@{
+    ViewData["Title"] = "Pending Items Report";
+}
+
+<div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div>
+        <h1 class="text-2xl font-bold text-slate-800 tracking-tight">Pending Actions</h1>
+        <p class="text-sm text-slate-500 mt-1">Activities blocked pending action from ERP team or University.</p>
+    </div>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 mb-6 p-4">
+    <form method="get" class="flex flex-wrap items-end gap-4">
+        <div class="w-full sm:w-auto">
+            <label class="block text-xs font-medium text-slate-500 mb-1">Organization</label>
+            <select name="orgId" asp-items="ViewBag.Orgs" class="block w-full sm:w-48 rounded-lg border-0 py-1.5 pl-3 pr-10 text-slate-900 ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                <option value="">All Organizations</option>
+            </select>
+        </div>
+        <div class="w-full sm:w-auto">
+            <label class="block text-xs font-medium text-slate-500 mb-1">Project</label>
+            <select name="projectId" asp-items="ViewBag.Projects" class="block w-full sm:w-48 rounded-lg border-0 py-1.5 pl-3 pr-10 text-slate-900 ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                <option value="">All Projects</option>
+            </select>
+        </div>
+        <div class="w-full sm:w-auto flex gap-2">
+            <button type="submit" class="inline-flex items-center rounded-lg bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">Filter</button>
+            <a href="/Reports/Pending" class="inline-flex items-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-50">Clear</a>
+        </div>
+    </form>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+    <table class="min-w-full divide-y divide-slate-200">
+        <thead class="bg-slate-50">
+            <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Entity</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Path</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Status</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Expected End</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Assigned To</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200 bg-white">
+            @foreach (var item in Model)
+            {
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">@item.EntityName</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">@item.HierarchyPath</td>
+                    <td class="px-6 py-4 whitespace-nowrap"><span class="@DisplayHelpers.StatusBadgeClass(item.Status.ToString())">@DisplayHelpers.StatusLabel(item.Status.ToString())</span></td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">@DisplayHelpers.FormatDate(item.ExpectedEndDate)</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-900">@item.AssignedTo</td>
+                </tr>
+            }
+            @if (!Model.Any())
+            {
+                <tr><td colspan="5" class="px-6 py-10 text-center text-slate-500">No pending items found.</td></tr>
+            }
+        </tbody>
+    </table>
+</div>

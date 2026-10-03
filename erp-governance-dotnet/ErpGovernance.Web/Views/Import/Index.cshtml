@@ -1,0 +1,53 @@
+@{
+    ViewData["Title"] = "Bulk Import";
+}
+
+<div class="mb-6">
+    <h1 class="text-2xl font-bold text-slate-800 tracking-tight">Bulk Import Hierarchy</h1>
+    <p class="text-sm text-slate-500 mt-1">Upload a CSV file to automatically construct the Project > Module > SubModuleGroup > SubModule > Checklist hierarchy.</p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+        <h3 class="text-lg font-medium text-slate-900 mb-4">Upload CSV File</h3>
+        
+        <form asp-action="Import" asp-controller="Import" method="post" enctype="multipart/form-data">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700">Select Project</label>
+                    <select name="projectId" asp-items="ViewBag.Projects" required class="mt-1 block w-full rounded-md border-slate-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm shadow-sm border">
+                        <option value="">-- Select Project --</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">CSV File</label>
+                    <input type="file" name="file" accept=".csv" required class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 border border-slate-200 rounded-md p-1" />
+                </div>
+                <div class="pt-4">
+                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Upload & Process
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="bg-slate-50 rounded-xl shadow-sm border border-slate-200 p-6">
+        <h3 class="text-lg font-medium text-slate-900 mb-4">Instructions</h3>
+        <p class="text-sm text-slate-600 mb-4">
+            The CSV file must contain exactly 16 columns matching the template. The system will group identical Module/Group/SubModule names to build the tree.
+        </p>
+        <ol class="list-decimal list-inside text-sm text-slate-600 space-y-2 mb-6">
+            <li>Download the CSV template.</li>
+            <li>Fill in your hierarchy data (one row per Checklist).</li>
+            <li>Select the target project.</li>
+            <li>Upload the file. Existing structures with the same name will be updated.</li>
+        </ol>
+        <a href="/Import/Template" class="inline-flex items-center px-4 py-2 border border-slate-300 shadow-sm text-sm font-medium rounded-md text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <svg class="-ml-1 mr-2 h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            Download CSV Template
+        </a>
+    </div>
+</div>

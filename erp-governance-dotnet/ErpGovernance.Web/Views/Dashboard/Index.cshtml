@@ -1,0 +1,260 @@
+@model List<ErpGovernance.Application.DTOs.ProjectTreeDto>
+@{
+    ViewData["Title"] = "Dashboard";
+    ViewData["ActiveNav"] = "Dashboard";
+    var summary = ViewBag.Summary as ErpGovernance.Application.DTOs.DashboardSummaryDto;
+}
+
+<!-- Summary Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex items-center hover:shadow-md transition-shadow">
+        <div class="p-3 rounded-xl bg-indigo-50 text-indigo-600 mr-4">
+            <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+        </div>
+        <div>
+            <p class="text-sm font-medium text-slate-500">Total Projects</p>
+            <p class="text-2xl font-bold text-slate-900">@(summary?.TotalProjects ?? 0)</p>
+        </div>
+    </div>
+    
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex items-center hover:shadow-md transition-shadow">
+        <div class="p-3 rounded-xl bg-cyan-50 text-cyan-600 mr-4">
+            <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+        </div>
+        <div>
+            <p class="text-sm font-medium text-slate-500">Total Modules</p>
+            <p class="text-2xl font-bold text-slate-900">@(summary?.TotalModules ?? 0)</p>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex items-center hover:shadow-md transition-shadow">
+        <div class="p-3 rounded-xl bg-emerald-50 text-emerald-600 mr-4">
+            <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
+        </div>
+        <div>
+            <p class="text-sm font-medium text-slate-500">Completed Checklists</p>
+            <p class="text-2xl font-bold text-slate-900">@(summary?.CompletedChecklists ?? 0) <span class="text-sm text-slate-400 font-normal">/ @(summary?.TotalChecklists ?? 0)</span></p>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex items-center hover:shadow-md transition-shadow">
+        <div class="p-3 rounded-xl bg-rose-50 text-rose-600 mr-4">
+            <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        </div>
+        <div>
+            <p class="text-sm font-medium text-slate-500">Delayed Items</p>
+            <p class="text-2xl font-bold text-slate-900">@(summary?.DelayedItems ?? 0)</p>
+        </div>
+    </div>
+</div>
+
+<!-- Filters -->
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-8">
+    <form method="get" class="flex flex-wrap gap-4 items-end">
+        <div class="w-full md:w-64">
+            <label class="block text-xs font-medium text-slate-500 mb-1">Organization</label>
+            <select name="orgId" class="block w-full rounded-lg border-slate-300 text-sm focus:ring-indigo-500 focus:border-indigo-500 py-2 pl-3 pr-10 border bg-white">
+                <option value="">All Organizations</option>
+                @if (ViewBag.Orgs != null)
+                {
+                    foreach (var org in ViewBag.Orgs)
+                    {
+                        var selected = Context.Request.Query["orgId"] == org.Value ? "selected" : "";
+                        <!option value="@org.Value" @selected>@org.Text</!option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="w-full md:w-64">
+            <label class="block text-xs font-medium text-slate-500 mb-1">Project</label>
+            <select name="projectId" class="block w-full rounded-lg border-slate-300 text-sm focus:ring-indigo-500 focus:border-indigo-500 py-2 pl-3 pr-10 border bg-white">
+                <option value="">All Projects</option>
+                @if (ViewBag.Projects != null)
+                {
+                    foreach (var proj in ViewBag.Projects)
+                    {
+                        var selected = Context.Request.Query["projectId"] == proj.Value ? "selected" : "";
+                        <!option value="@proj.Value" @selected>@proj.Text</!option>
+                    }
+                }
+            </select>
+        </div>
+        <button type="submit" class="px-4 py-2 bg-slate-800 text-white text-sm font-medium rounded-lg hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-800 transition-colors">
+            Filter Dashboard
+        </button>
+        <a href="/Dashboard" class="px-4 py-2 bg-slate-100 text-slate-600 text-sm font-medium rounded-lg hover:bg-slate-200 transition-colors">
+            Clear
+        </a>
+    </form>
+</div>
+
+<!-- Project Trees (Alpine Accordion) -->
+<div class="space-y-6">
+    @if (!Model.Any())
+    {
+        <div class="text-center py-12 bg-white rounded-xl border border-dashed border-slate-300">
+            <svg class="mx-auto h-12 w-12 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+            <h3 class="mt-2 text-sm font-semibold text-slate-900">No projects found</h3>
+            <p class="mt-1 text-sm text-slate-500">Get started by creating a new project or adjusting filters.</p>
+        </div>
+    }
+
+    @foreach (var proj in Model)
+    {
+        <div x-data="{ expanded: true }" class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden transition-all hover:border-slate-300">
+            <!-- Project Header -->
+            <div @@click="expanded = !expanded" class="cursor-pointer bg-slate-50 px-6 py-4 flex items-center justify-between border-b border-slate-200 group">
+                <div class="flex items-center space-x-4">
+                    <svg class="w-5 h-5 text-slate-400 group-hover:text-indigo-500 transition-transform duration-200" :class="{'rotate-90 text-indigo-500': expanded}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                            @proj.Name 
+                            <span class="ml-3 font-mono text-xs font-medium bg-slate-200 text-slate-600 px-2 py-0.5 rounded">@proj.Code</span>
+                        </h2>
+                        <p class="text-sm text-slate-500">Org: <span class="font-medium text-slate-700">@proj.OrganizationName</span> | Managers: @string.Join(", ", proj.ManagerNames)</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <span class="@DisplayHelpers.StatusBadgeClass(proj.Status.ToString().ToLower())">@DisplayHelpers.StatusLabel(proj.Status.ToString().ToLower())</span>
+                    <span class="@DisplayHelpers.PriorityBadgeClass(proj.Priority.ToString().ToLower())">@DisplayHelpers.PriorityBadgeClass(proj.Priority.ToString().ToLower())</span>
+                    
+                    <!-- Progress Ring -->
+                    <div class="flex items-center justify-center w-12 h-12 relative">
+                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                            <path class="text-slate-200" stroke-width="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <path class="@DisplayHelpers.ProgressColorClass(proj.ProgressPercentage).Replace("bg-", "text-")" stroke-width="3" stroke-dasharray="@proj.ProgressPercentage, 100" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        </svg>
+                        <span class="absolute text-xs font-semibold">@(Math.Round(proj.ProgressPercentage))%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modules List -->
+            <div x-show="expanded" x-collapse x-cloak class="divide-y divide-slate-100">
+                @if(!proj.Modules.Any())
+                {
+                    <div class="px-14 py-6 text-sm text-slate-500 italic">No modules in this project yet.</div>
+                }
+                
+                @foreach (var mod in proj.Modules)
+                {
+                    <div x-data="{ modExpanded: false }" class="pl-6">
+                        <div @@click="modExpanded = !modExpanded" class="cursor-pointer py-3 pr-6 flex items-center justify-between hover:bg-slate-50 transition-colors border-l-2 border-transparent hover:border-indigo-300 pl-4">
+                            <div class="flex items-center space-x-3">
+                                <svg class="w-4 h-4 text-slate-400 transition-transform duration-200" :class="{'rotate-90 text-indigo-400': modExpanded}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                                <span class="font-semibold text-slate-800">@mod.Name</span>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <span class="@DisplayHelpers.StatusBadgeClass(mod.Status.ToString().ToLower()) text-[10px] px-2 py-0">@DisplayHelpers.StatusLabel(mod.Status.ToString().ToLower())</span>
+                                <div class="w-24 bg-slate-200 rounded-full h-1.5 overflow-hidden">
+                                    <div class="@DisplayHelpers.ProgressColorClass(mod.ProgressPercentage) h-1.5 rounded-full" style="width: @mod.ProgressPercentage%"></div>
+                                </div>
+                                <span class="text-xs font-medium text-slate-600 w-8 text-right">@mod.ProgressPercentage%</span>
+                            </div>
+                        </div>
+
+                        <!-- SubModuleGroups -->
+                        <div x-show="modExpanded" x-collapse x-cloak class="pl-8 pb-3 text-sm divide-y divide-slate-50">
+                            @foreach(var smg in mod.SubModuleGroups)
+                            {
+                                <div x-data="{ smgExpanded: false }">
+                                    <div @@click="smgExpanded = !smgExpanded" class="cursor-pointer py-2 pr-6 flex items-center justify-between hover:bg-slate-50 transition-colors border-l-2 border-transparent hover:border-sky-300 pl-4">
+                                        <div class="flex items-center space-x-2">
+                                            <svg class="w-3 h-3 text-slate-400 transition-transform duration-200" :class="{'rotate-90': smgExpanded}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                                            <span class="font-medium text-slate-700">@smg.Name</span>
+                                        </div>
+                                        <div class="flex items-center space-x-4">
+                                            <div class="w-20 bg-slate-200 rounded-full h-1.5 overflow-hidden">
+                                                <div class="@DisplayHelpers.ProgressColorClass(smg.ProgressPercentage) h-1.5 rounded-full" style="width: @smg.ProgressPercentage%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- SubModules -->
+                                    <div x-show="smgExpanded" x-collapse x-cloak class="pl-6 pb-2 text-sm divide-y divide-slate-50">
+                                        @foreach(var sm in smg.SubModules)
+                                        {
+                                            <div x-data="{ smExpanded: false }">
+                                                <div @@click="smExpanded = !smExpanded" class="cursor-pointer py-2 pr-6 flex items-center justify-between hover:bg-slate-50 transition-colors border-l-2 border-transparent hover:border-teal-300 pl-4">
+                                                    <div class="flex items-center space-x-2">
+                                                        <svg class="w-3 h-3 text-slate-400 transition-transform duration-200" :class="{'rotate-90': smExpanded}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                                                        <span class="text-slate-600">@sm.Name</span>
+                                                    </div>
+                                                    <div class="flex items-center space-x-4">
+                                                        <div class="w-16 bg-slate-200 rounded-full h-1.5 overflow-hidden">
+                                                            <div class="@DisplayHelpers.ProgressColorClass(sm.ProgressPercentage) h-1.5 rounded-full" style="width: @sm.ProgressPercentage%"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <!-- Checklists -->
+                                                <div x-show="smExpanded" x-collapse x-cloak class="pl-6 pb-2">
+                                                    <ul class="space-y-2 mt-1 pr-6 border-l border-slate-200 ml-1 pl-4">
+                                                        @foreach(var chk in sm.Checklists)
+                                                        {
+                                                            <li class="bg-white border border-slate-200 rounded-lg p-3 shadow-sm hover:shadow transition-shadow">
+                                                                <div class="flex justify-between items-start">
+                                                                    <div>
+                                                                        <div class="flex items-center space-x-2 mb-1">
+                                                                            <span class="font-medium text-slate-800">@chk.Name</span>
+                                                                            <span class="@DisplayHelpers.StatusBadgeClass(chk.Status.ToString().ToLower()) text-[10px] px-1.5 py-0">@DisplayHelpers.StatusLabel(chk.Status.ToString().ToLower())</span>
+                                                                        </div>
+                                                                        <div class="text-xs text-slate-500 flex items-center space-x-3">
+                                                                            <span>Due: <span class="font-medium text-slate-700">@DisplayHelpers.FormatDate(chk.ExpectedEndDate)</span></span>
+                                                                            <span>Activities: <span class="font-medium">@(chk.Activities?.Count ?? 0)</span></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="flex items-center space-x-3">
+                                                                        <span class="text-xs font-bold @DisplayHelpers.ProgressColorClass(chk.ProgressPercentage).Replace("bg-","text-")">@chk.ProgressPercentage%</span>
+                                                                        <button type="button" onclick="openErpModal('/Activities/Form?checklistId=@chk.Id', 'Create Activity')" class="inline-flex items-center px-2.5 py-1 border border-emerald-200 text-xs font-semibold rounded text-emerald-700 bg-emerald-50 hover:bg-emerald-100 transition-colors shadow-sm cursor-pointer" title="Add Activity">
+                                                                            + Add Activity
+                                                                        </button>
+                                                                        <a href="/Activities?checklistId=@chk.Id" class="inline-flex items-center px-2 py-1 border border-indigo-200 text-xs font-medium rounded text-indigo-700 bg-indigo-50 hover:bg-indigo-100 transition-colors">
+                                                                            View Tasks &rarr;
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                @if (chk.Activities != null && chk.Activities.Any())
+                                                                {
+                                                                    <div class="mt-2.5 pt-2.5 border-t border-slate-100">
+                                                                        <ul class="space-y-1.5">
+                                                                            @foreach (var act in chk.Activities)
+                                                                            {
+                                                                                <li class="flex items-center justify-between text-xs text-slate-600 bg-slate-50 p-2 rounded border border-slate-100">
+                                                                                    <div class="flex items-center space-x-2">
+                                                                                        <span class="font-medium text-slate-800">@act.Title</span>
+                                                                                        <span class="text-slate-400 font-mono scale-90">(@act.ActivityTypeDisplay)</span>
+                                                                                        <span class="@DisplayHelpers.StatusBadgeClass(act.Status.ToString().ToLower()) text-[9px] px-1 py-0 scale-90">@DisplayHelpers.StatusLabel(act.Status.ToString().ToLower())</span>
+                                                                                        @if (!string.IsNullOrEmpty(act.AssignedUserName))
+                                                                                        {
+                                                                                            <span class="text-slate-400 font-medium scale-90">Assignee: @act.AssignedUserName</span>
+                                                                                        }
+                                                                                    </div>
+                                                                                    <div class="flex items-center space-x-2">
+                                                                                        <button type="button" onclick="openErpModal('/Activities/Form?id=@act.Id', 'Edit Activity')" class="text-indigo-600 hover:text-indigo-950 font-medium px-1 cursor-pointer">Edit</button>
+                                                                                    </div>
+                                                                                </li>
+                                                                            }
+                                                                        </ul>
+                                                                    </div>
+                                                                }
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>

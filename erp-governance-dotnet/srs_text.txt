@@ -1,0 +1,68 @@
+[0] [Title] Software Requirements Specification (SRS)
+[1] [Normal] ERP Implementation Governance & Collaboration Platform
+[2] [Normal] Target stack: ASP.NET Core (.NET 8+), Microsoft SQL Server, Tailwind CSS
+Reference: Existing PHP/MySQL application (erp_governance_platform)
+Version: 1.0  |  Date: May 2026
+[4] [Heading 1] 1. Introduction
+[5] [Heading 2] 1.1 Purpose
+[6] [Normal] This SRS defines functional and non-functional requirements to rebuild the ERP Implementation Governance & Collaboration Platform—a web system for universities and ERP vendors to plan, track, and report ERP implementation work across a fixed hierarchy, with role-based access, dashboards, bulk import, reports, audit, and notifications.
+[7] [Heading 2] 1.2 Scope
+[9] [Heading 2] 1.3 Definitions
+[11] [Heading 1] 2. Overall Description
+[12] [Heading 2] 2.1 Product perspective
+[13] [Normal] Browser (Tailwind UI) → ASP.NET Core 8 (Controllers/API, Authorization, Services, EF Core) → SQL Server 2019+ → File storage (local or Azure Blob).
+[14] [Heading 2] 2.2 User classes
+[16] [Heading 2] 2.3 Operating environment
+[17] [Normal] Server: Windows/Linux (IIS or Kestrel). DB: SQL Server 2019+. Clients: modern browsers. Default timezone: Asia/Kolkata. CSV import dates: dd-mmm-yyyy only (e.g. 01-Jan-2026).
+[18] [Heading 2] 2.4 Design constraints
+[19] [Normal] Tailwind CSS for UI; layered architecture (Presentation → Application → Domain → Infrastructure); no business logic in views; CSRF/JWT on mutating endpoints.
+[20] [Heading 1] 3. System Features (Functional Requirements)
+[21] [Heading 2] 3.1 Authentication (FR-AUTH)
+[23] [Heading 2] 3.2 Organization master (FR-ORG)
+[25] [Heading 2] 3.3 User management (FR-USER)
+[27] [Heading 2] 3.4 Project management (FR-PROJ)
+[28] [Normal] Many-to-many ProjectManagers. Progress roll-up from modules.
+[30] [Heading 2] 3.5 Scoping (FR-SCOPE)
+[31] [Normal] Organization + Project filters on dashboard, activities, reports. Server-side enforcement via IProjectScopeService on every query.
+[32] [Heading 2] 3.6 Implementation hierarchy (FR-HIER)
+[33] [Normal] Structure: Organization → Project → Module → Sub Module Group → Sub Module → Checklist → Activity.
+[34] [Heading 3] Progress roll-up rules
+[36] [Heading 2] 3.7 Activities (FR-ACT)
+[37] [Normal] Belongs to one checklist. Required: Title, ActivityType. Primary scheduling: ActualStartDateTime, ActualEndDateTime. Does not auto-update checklist progress.
+[39] [Heading 2] 3.8 Dashboard (FR-DASH)
+[40] [Normal] Summary cards, per-project expandable tree, per-project stats, single + Activity per checklist, modal AJAX CRUD, legacy communication migrate to activity.
+[41] [Heading 2] 3.9 Communication logs — legacy (FR-COMM)
+[42] [Normal] Read legacy CommunicationLogs in merged view. Edit → activity form with MigrateCommunicationId; save creates activity and deletes log. No new comm-only creates.
+[43] [Heading 2] 3.10 Bulk CSV import (FR-IMP)
+[44] [Normal] 16 columns. Dates: dd-mmm-yyyy only. Governance applies to deepest level in row.
+[46] [Heading 2] 3.11 Reference data
+[47] [Normal] Statuses: draft, not_started, in_progress, pending_erp, pending_university, on_hold, delayed, completed, approved, rejected. Priorities: low, medium, high, critical.
+[48] [Heading 2] 3.12 Reports (FR-RPT)
+[50] [Heading 2] 3.13–3.15 Notifications, Audit, Attachments
+[51] [Normal] In-app notifications; audit log (Super Admin); attachments max 5MB with authorized download.
+[52] [Heading 1] 4. Non-Functional Requirements
+[54] [Heading 1] 5. Logical Data Model (SQL Server)
+[56] [Normal] Core tables: Organizations, Users, Projects, ProjectManagers, Modules, SubModules, SubSubModules, Checklists, Activities, CommunicationLogs (legacy), Attachments, Notifications, StatusHistory, AuditLogs, ChecklistDependencies, ActivityDependencies.
+[57] [Heading 1] 6. Application Architecture (.NET)
+[58] [Normal] Solution: ErpGovernance.Web, .Application, .Domain, .Infrastructure, .Tests. Services: Auth, ProjectScope, Hierarchy, ProgressRollup, Activity, HierarchyImport, Dashboard, Report, Notification, Audit, Attachment. Phase 1: ASP.NET Core MVC + Razor + Tailwind + EF Core 8 + Identity.
+[59] [Heading 1] 7. User Interface Requirements
+[60] [Normal] Screens: Login, Dashboard, Hierarchy index/detail/forms, Activities, Projects, Organizations, Users, Bulk CSV import, Reports (4), Notifications, Audit, Profile. Dashboard modal: GET Form, POST Save with antiforgery.
+[61] [Heading 1] 8. Migration from PHP/MySQL
+[62] [Normal] Export MySQL; map sub_modules→SubModuleGroups, sub_sub_modules→SubModules; preserve IDs; migrate communication_logs or in-app on edit; copy uploads/; password rehash or reset.
+[63] [Heading 1] 9. Acceptance Criteria (Phase 1)
+[64] [List Number] 1. Login and scoped dashboard
+[65] [List Number] 2. Hierarchy CRUD with Sub Module Group / Sub Module labels
+[66] [List Number] 3. Checklist progress independent of activities; roll-up works
+[67] [List Number] 4. Single + Activity; legacy comm migration
+[68] [List Number] 5. CSV template 16 columns; dd-mmm-yyyy validation
+[69] [List Number] 6. Four scoped reports
+[70] [List Number] 7. Audit log for logins and mutations
+[71] [List Number] 8. Tailwind UI consistent
+[72] [List Number] 9. EF migrations to SQL Server
+[73] [List Number] 10. 403 for unauthorized project access
+[74] [Heading 1] 10. Implementation Phases
+[76] [Heading 1] Appendix A — Activity types
+[77] [Normal] task, email, call, follow_up_call, follow_up, online_meeting, physical_meeting, meeting, discussion, mom, whatsapp, review, approval, uat, escalation
+[78] [Heading 1] Appendix B — Sample CSV row
+[79] [Normal] Finance,Finance module,General Ledger,GL area,Chart of Accounts,COA scope,COA Mapping,Map COA,01-Jan-2026,31-Mar-2026,,,not_started,high,0,
+[80] [Heading 1] Appendix C — Technology stack

@@ -1,0 +1,108 @@
+@model IEnumerable<ErpGovernance.Application.DTOs.ProgressReportDto>
+@using ErpGovernance.Web.Helpers
+
+@{
+    ViewData["Title"] = "Progress Report";
+}
+
+<div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div>
+        <h1 class="text-2xl font-bold text-slate-800 tracking-tight">Progress Report</h1>
+        <p class="text-sm text-slate-500 mt-1">Detailed progress metrics across the entire hierarchy.</p>
+    </div>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 mb-6 p-4">
+    <form method="get" class="flex flex-wrap items-end gap-4">
+        <div class="w-full sm:w-auto">
+            <label class="block text-xs font-medium text-slate-500 mb-1">Organization</label>
+            <select name="orgId" asp-items="ViewBag.Orgs" class="block w-full sm:w-48 rounded-lg border-0 py-1.5 pl-3 pr-10 text-slate-900 ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                <option value="">All Organizations</option>
+            </select>
+        </div>
+        <div class="w-full sm:w-auto">
+            <label class="block text-xs font-medium text-slate-500 mb-1">Project</label>
+            <select name="projectId" asp-items="ViewBag.Projects" class="block w-full sm:w-48 rounded-lg border-0 py-1.5 pl-3 pr-10 text-slate-900 ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                <option value="">All Projects</option>
+            </select>
+        </div>
+        <div class="w-full sm:w-auto flex gap-2">
+            <button type="submit" class="inline-flex items-center rounded-lg bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-indigo-600">
+                Filter
+            </button>
+            <a href="/Reports/Progress" class="inline-flex items-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-50">
+                Clear
+            </a>
+        </div>
+    </form>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-slate-200">
+            <thead class="bg-slate-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Project / Module</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Hierarchy Path</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Checklist</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status & Priority</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Timeline</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Progress</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 bg-white">
+                @foreach (var item in Model)
+                {
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm font-medium text-slate-900">@item.ProjectName</div>
+                            <div class="text-sm text-slate-500">@item.ModuleName</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-slate-900">@item.SubModuleGroupName</div>
+                            <div class="text-sm text-slate-500 text-xs">↳ @item.SubModuleName</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm font-medium text-slate-900">@item.ChecklistName</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="@DisplayHelpers.StatusBadgeClass(item.Status.ToString()) mb-1">
+                                @DisplayHelpers.StatusLabel(item.Status.ToString())
+                            </span>
+                            <br />
+                            <span class="@DisplayHelpers.PriorityBadgeClass(item.Priority.ToString())">
+                                @item.Priority.ToString()
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+                            <div>Start: @DisplayHelpers.FormatDate(item.ExpectedStartDate)</div>
+                            <div>End: @DisplayHelpers.FormatDate(item.ExpectedEndDate)</div>
+                            @if (item.Status != ErpGovernance.Domain.Enums.ItemStatus.Completed && item.ExpectedEndDate.HasValue && item.ExpectedEndDate.Value < DateOnly.FromDateTime(DateTime.Today))
+                            {
+                                <div class="text-red-500 text-xs mt-1 font-medium">Overdue by @DisplayHelpers.DaysDelayed(item.ExpectedEndDate) days</div>
+                            }
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap w-48">
+                            <div class="flex items-center justify-between text-xs text-slate-500 mb-1">
+                                <span>Progress</span>
+                                <span class="font-medium text-slate-700">@item.ProgressPercentage.ToString("0.##")%</span>
+                            </div>
+                            <div class="w-full bg-slate-200 rounded-full h-1.5 overflow-hidden">
+                                <div class="h-1.5 rounded-full @DisplayHelpers.ProgressColorClass(item.ProgressPercentage)" style="width: @item.ProgressPercentage%"></div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="6" class="px-6 py-10 text-center text-slate-500">
+                            No data found for the selected criteria.
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

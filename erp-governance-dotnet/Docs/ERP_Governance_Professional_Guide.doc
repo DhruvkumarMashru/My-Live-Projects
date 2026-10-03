@@ -1,0 +1,137 @@
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+    <meta charset="utf-8">
+    <title>ERP Governance Platform - System Manual</title>
+    <!--[if gte mso 9]>
+    <xml>
+        <w:WordDocument>
+            <w:View>Print</w:View>
+            <w:Zoom>100</w:Zoom>
+            <w:DoNotOptimizeForBrowser/>
+        </w:WordDocument>
+    </xml>
+    <![endif]-->
+    <style>
+        body { font-family: 'Calibri', 'Arial', sans-serif; font-size: 11pt; line-height: 1.5; color: #333; margin: 1in; }
+        h1 { color: #2C3E50; font-size: 24pt; border-bottom: 2px solid #2C3E50; padding-bottom: 5px; text-align: center; }
+        h2 { color: #34495E; font-size: 18pt; margin-top: 20pt; border-bottom: 1px solid #BDC3C7; padding-bottom: 3px; }
+        h3 { color: #2980B9; font-size: 14pt; margin-top: 15pt; }
+        p { margin: 10pt 0; text-align: justify; }
+        ul, ol { margin: 10pt 0; padding-left: 20pt; }
+        li { margin-bottom: 5pt; }
+        .highlight { background-color: #F8F9F9; border-left: 4px solid #2980B9; padding: 10pt; margin: 10pt 0; font-style: italic; }
+        table { width: 100%; border-collapse: collapse; margin: 15pt 0; }
+        th, td { border: 1px solid #BDC3C7; padding: 8pt; text-align: left; }
+        th { background-color: #ECF0F1; color: #2C3E50; }
+        .page-break { page-break-before: always; }
+    </style>
+</head>
+<body>
+
+    <h1>ERP Governance Platform<br>Professional User & Security Manual</h1>
+    
+    <p style="text-align: center; font-size: 12pt; color: #7F8C8D;">Generated for System Administrators and Governance Teams</p>
+    
+    <br><br>
+
+    <h2>Table of Contents</h2>
+    <ol>
+        <li><a href="#part1">Part 1: Step-by-Step User Guide</a></li>
+        <li><a href="#part2">Part 2: Security & Dynamic RBAC Framework</a></li>
+    </ol>
+
+    <div class="page-break" id="part1"></div>
+
+    <h2>Part 1: Step-by-Step User Guide</h2>
+    <p>This guide walks you through setting up and utilizing the ERP Governance platform from a completely clean slate.</p>
+
+    <h3>Step 1: First Login & Initial Setup</h3>
+    <p>The system is initialized with a failsafe Super Admin account to ensure you are never locked out.</p>
+    <ul>
+        <li>Navigate to the local server URL.</li>
+        <li>Log in using the pre-configured Super Admin credentials.</li>
+        <li>You will land on the central <strong>Dashboard</strong>.</li>
+    </ul>
+
+    <h3>Step 2: Structuring the Administration</h3>
+    <p>Before launching projects, you must build out the organizational structure.</p>
+    <ol>
+        <li><strong>Organizations:</strong> Go to Administration > Organizations. Click <em>Create New Organization</em> (e.g., "Acme Corp").</li>
+        <li><strong>Roles:</strong> Go to Roles & Permissions. Create custom roles such as "External Auditor" and use the visual grid matrix to check only the <em>View</em> permissions.</li>
+        <li><strong>Users:</strong> Go to Users. Create a new user (e.g., "John Doe"), assign them to "Acme Corp" and select the "External Auditor" role you just created.</li>
+    </ol>
+    <div class="highlight">
+        <strong>Result:</strong> When John Doe logs in, the platform instantly adapts to his role. Administrative menus disappear, and all "Create" or "Edit" buttons are programmatically hidden.
+    </div>
+
+    <h3>Step 3: Creating the Project Hierarchy</h3>
+    <p>ERP tracking relies on a strict 5-level hierarchy: <em>Project &gt; Module &gt; SubModule Group &gt; SubModule &gt; Checklist</em>.</p>
+    <ul>
+        <li><strong>Manual Creation:</strong> Navigate to Projects, click New Project, and drill down level by level to manually add components.</li>
+        <li><strong>Bulk Import (Recommended):</strong> Navigate to Bulk Import, select your Project, and upload a CSV file containing your entire work breakdown structure. The system automatically builds the 5-level tree instantly.</li>
+    </ul>
+
+    <h3>Step 4: Executing Activities & Tracking Progress</h3>
+    <p>At the bottom of the hierarchy (Checklists), your teams create and execute <strong>Activities</strong>.</p>
+    <ul>
+        <li>Users update Activity statuses to <em>In Progress</em> or <em>Completed</em>.</li>
+        <li><strong>Automatic Roll-up:</strong> The completion of an Activity instantly triggers mathematical progress roll-ups up the chain, dynamically updating the overall Project Completion percentage in real-time.</li>
+    </ul>
+
+    <h3>Step 5: Monitoring via Dashboard and Reports</h3>
+    <ul>
+        <li><strong>Dashboard:</strong> Expand the visual project tree to identify roadblocks at a glance.</li>
+        <li><strong>Reports:</strong> Utilize the <em>Delayed Items Report</em> to see exactly which deliverables have passed their Expected End Date, and the <em>Responsibility Matrix</em> to see who is assigned to them.</li>
+    </ul>
+
+
+    <div class="page-break" id="part2"></div>
+
+
+    <h2>Part 2: Security & Dynamic RBAC Framework</h2>
+    <p>The platform utilizes a highly granular, dynamic Claims-based Authorization architecture. This section outlines the default roles and how the system isolates data.</p>
+
+    <h3>1. Dynamic Permission Matrix Engine</h3>
+    <p>Instead of hardcoded roles, the system breaks actions into granular claims (e.g., <code>Permissions.Projects.View</code>). The Razor User Interface constantly evaluates these claims in real-time, completely morphing the interface to match the user's explicit permissions.</p>
+
+    <h3>2. Default Governance Roles</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>System Role</th>
+                <th>Responsibility & Scope</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Super Admin</strong></td>
+                <td>Ultimate platform controller. Automatically bypasses granular checks. Has universal read/write access and views the global immutable Audit Logs.</td>
+            </tr>
+            <tr>
+                <td><strong>Project HOD</strong></td>
+                <td>Head of Department for a specific Organization. Can only see Projects and Users belonging to their explicit Organization.</td>
+            </tr>
+            <tr>
+                <td><strong>Project Manager</strong></td>
+                <td>Operational leader. Can exclusively view and manage specific Projects they are formally assigned to manage.</td>
+            </tr>
+            <tr>
+                <td><strong>ERP Team</strong></td>
+                <td>Implementation consultants. Primary function is logging in, navigating the hierarchy, and completing assigned Activities.</td>
+            </tr>
+            <tr>
+                <td><strong>Viewer</strong></td>
+                <td>Read-only external stakeholders or executives. All action buttons are permanently hidden from their interface.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>3. Deep System Auditing</h3>
+    <p>Complete transparency is guaranteed by the deep auditing engine embedded in the controllers:</p>
+    <ul>
+        <li><strong>Permission Audits:</strong> If any administrator modifies a role's permissions, the system logs the exact claim added/removed, the timestamp, and the actor.</li>
+        <li><strong>User Audits:</strong> Any promotion, demotion, or role alteration applied to a user is logged immutably to the database and displayed in the Audit Logs panel.</li>
+    </ul>
+
+</body>
+</html>

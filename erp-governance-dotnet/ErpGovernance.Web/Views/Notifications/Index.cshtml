@@ -1,0 +1,60 @@
+@model IEnumerable<ErpGovernance.Domain.Entities.Notification>
+@using ErpGovernance.Web.Helpers
+
+@{
+    ViewData["Title"] = "Notifications";
+}
+
+<div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div>
+        <h1 class="text-2xl font-bold text-slate-800 tracking-tight">Notifications</h1>
+        <p class="text-sm text-slate-500 mt-1">Your recent alerts and messages.</p>
+    </div>
+    @if (Model.Any(n => !n.IsRead))
+    {
+        <form asp-action="MarkAllRead" method="post">
+            <button type="submit" class="inline-flex items-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-50">
+                Mark All as Read
+            </button>
+        </form>
+    }
+</div>
+
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+    <ul role="list" class="divide-y divide-slate-200">
+        @foreach (var notif in Model)
+        {
+            <li class="p-6 hover:bg-slate-50 transition-colors @(notif.IsRead ? "" : "bg-indigo-50/30")">
+                <div class="flex items-start justify-between">
+                    <div class="flex items-start space-x-3">
+                        <div class="flex-shrink-0 mt-1">
+                            @if (!notif.IsRead)
+                            {
+                                <span class="h-2 w-2 bg-indigo-600 rounded-full block"></span>
+                            }
+                            else
+                            {
+                                <span class="h-2 w-2 bg-slate-300 rounded-full block"></span>
+                            }
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-medium text-slate-900">@notif.Title</h3>
+                            <p class="mt-1 text-sm text-slate-600">@notif.Message</p>
+                            <p class="mt-2 text-xs text-slate-400">@DisplayHelpers.FormatDateTimeIst(notif.CreatedAt)</p>
+                        </div>
+                    </div>
+                    @if (!notif.IsRead)
+                    {
+                        <form asp-action="MarkRead" asp-route-id="@notif.Id" method="post">
+                            <button type="submit" class="text-xs font-medium text-indigo-600 hover:text-indigo-500 bg-white border border-indigo-200 rounded px-2 py-1 shadow-sm">Mark Read</button>
+                        </form>
+                    }
+                </div>
+            </li>
+        }
+        @if (!Model.Any())
+        {
+            <li class="p-6 text-center text-sm text-slate-500">You have no notifications.</li>
+        }
+    </ul>
+</div>

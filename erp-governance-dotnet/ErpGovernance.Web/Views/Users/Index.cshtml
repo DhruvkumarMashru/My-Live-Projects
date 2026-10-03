@@ -1,0 +1,78 @@
+@model List<ErpGovernance.Application.DTOs.UserListDto>
+@{
+    ViewData["Title"] = "Users";
+    ViewData["ActiveNav"] = "Users";
+}
+
+<div class="mb-6 flex justify-between items-center">
+    <div>
+        <h2 class="text-2xl font-bold text-slate-800">User Management</h2>
+        <p class="text-sm text-slate-500 mt-1">Manage platform access, roles, and profiles.</p>
+    </div>
+    <a href="/Users/Create" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition-colors">
+        <svg class="-ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
+        Add User
+    </a>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+    <table class="min-w-full divide-y divide-slate-200">
+        <thead class="bg-slate-50">
+            <tr>
+                <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">User</th>
+                <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Role & Org</th>
+                <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Status</th>
+                <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Last Login</th>
+                <th scope="col" class="px-6 py-4 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-slate-200">
+            @foreach (var user in Model)
+            {
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold">
+                                @user.FullName.Substring(0, 1).ToUpper()
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-slate-900">@user.FullName</div>
+                                <div class="text-sm text-slate-500">@user.Email</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-slate-900">@ErpGovernance.Web.Helpers.DisplayHelpers.RoleLabel(user.Role.ToString().ToLower())</div>
+                        <div class="text-xs text-slate-500 mt-1">@(user.OrganizationName ?? "Platform Level")</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        @if (user.IsActive)
+                        {
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">Active</span>
+                        }
+                        else
+                        {
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-rose-100 text-rose-800">Inactive</span>
+                        }
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+                        @(user.LastLogin?.ToString("MMM dd, yyyy HH:mm") ?? "Never")
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <div class="flex items-center justify-end gap-2">
+                            <a href="/Users/Edit/@user.Id" class="inline-flex items-center px-2.5 py-1.5 border border-amber-300 text-xs font-medium rounded text-amber-700 bg-amber-50 hover:bg-amber-100 transition-colors" title="Edit">
+                                <svg class="h-3.5 w-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>Edit
+                            </a>
+                            <form method="post" action="/Users/ToggleActive/@user.Id" class="inline" onsubmit="return confirm('@(user.IsActive ? "Deactivate" : "Activate") @Html.Raw(user.FullName.Replace("'", "\\'"))?')">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="inline-flex items-center px-2.5 py-1.5 border text-xs font-medium rounded transition-colors @(user.IsActive ? "border-rose-300 text-rose-700 bg-rose-50 hover:bg-rose-100" : "border-emerald-300 text-emerald-700 bg-emerald-50 hover:bg-emerald-100")">
+                                    @(user.IsActive ? "Deactivate" : "Activate")
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
