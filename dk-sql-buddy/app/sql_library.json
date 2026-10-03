@@ -1,0 +1,210 @@
+[
+  {
+    "title": "Test Fee Aggregation Query",
+    "description": "Automated test suite query",
+    "database": "MEFCampus",
+    "sql_script": "SELECT [DOWNLOADTYPE], SUM([SRNO]) AS [TotalSRNO]\nFROM [MEFCampus].dbo._GENERALFORMAT t1\nWHERE [DOWNLOADTYPE] IS NOT NULL\nGROUP BY [DOWNLOADTYPE]\nORDER BY 2 DESC;",
+    "id": "tpl_f294fe1b",
+    "created_at": "2026-08-27 13:29:38"
+  },
+  {
+    "title": "Test Fee Aggregation Query",
+    "description": "Automated test suite query",
+    "database": "MEFCampus",
+    "sql_script": "SELECT [DOWNLOADTYPE], SUM([SRNO]) AS [TotalSRNO]\nFROM [MEFCampus].dbo._GENERALFORMAT t1\nWHERE [DOWNLOADTYPE] IS NOT NULL\nGROUP BY [DOWNLOADTYPE]\nORDER BY 2 DESC;",
+    "id": "tpl_2b77e756",
+    "created_at": "2026-08-22 09:24:11"
+  },
+  {
+    "title": "Test Fee Aggregation Query",
+    "description": "Automated test suite query",
+    "database": "MEFCampus",
+    "sql_script": "SELECT [DOWNLOADTYPE], SUM([SRNO]) AS [TotalSRNO]\nFROM [MEFCampus].dbo._GENERALFORMAT t1\nWHERE [DOWNLOADTYPE] IS NOT NULL\nGROUP BY [DOWNLOADTYPE]\nORDER BY 2 DESC;",
+    "id": "tpl_855204fa",
+    "created_at": "2026-08-21 12:54:46"
+  },
+  {
+    "title": "Test Fee Aggregation Query",
+    "description": "Automated test suite query",
+    "database": "MEFCampus",
+    "sql_script": "SELECT [DOWNLOADTYPE], SUM([SRNO]) AS [TotalSRNO]\nFROM [MEFCampus].dbo._GENERALFORMAT t1\nWHERE [DOWNLOADTYPE] IS NOT NULL\nGROUP BY [DOWNLOADTYPE]\nORDER BY 2 DESC;",
+    "id": "tpl_374c02dd",
+    "created_at": "2026-08-21 09:22:35"
+  },
+  {
+    "title": "Test Fee Aggregation Query",
+    "description": "Automated test suite query",
+    "database": "MEFCampus",
+    "sql_script": "SELECT [DOWNLOADTYPE], SUM([SRNO]) AS [TotalSRNO]\nFROM [MEFCampus].dbo._GENERALFORMAT t1\nWHERE [DOWNLOADTYPE] IS NOT NULL\nGROUP BY [DOWNLOADTYPE]\nORDER BY 2 DESC;",
+    "id": "tpl_c8d1a688",
+    "created_at": "2026-08-20 17:51:41"
+  },
+  {
+    "title": "Test Fee Aggregation Query",
+    "description": "Automated test suite query",
+    "database": "MEFCampus",
+    "sql_script": "SELECT [DOWNLOADTYPE], SUM([SRNO]) AS [TotalSRNO]\nFROM [MEFCampus].dbo._GENERALFORMAT t1\nWHERE [DOWNLOADTYPE] IS NOT NULL\nGROUP BY [DOWNLOADTYPE]\nORDER BY 2 DESC;",
+    "id": "tpl_193fd0bd",
+    "created_at": "2026-08-20 17:20:18"
+  },
+  {
+    "title": "Test Fee Aggregation Query",
+    "description": "Automated test suite query",
+    "database": "MEFCampus",
+    "sql_script": "SELECT [DOWNLOADTYPE], SUM([SRNO]) AS [TotalSRNO]\nFROM [MEFCampus].dbo._GENERALFORMAT t1\nWHERE [DOWNLOADTYPE] IS NOT NULL\nGROUP BY [DOWNLOADTYPE]\nORDER BY 2 DESC;",
+    "id": "tpl_ecc14515",
+    "created_at": "2026-08-20 17:17:09"
+  },
+  {
+    "title": "Test Fee Aggregation Query",
+    "description": "Automated test suite query",
+    "database": "MEFCampus",
+    "sql_script": "SELECT [DOWNLOADTYPE], SUM([SRNO]) AS [TotalSRNO]\nFROM [MEFCampus].dbo._GENERALFORMAT t1\nWHERE [DOWNLOADTYPE] IS NOT NULL\nGROUP BY [DOWNLOADTYPE]\nORDER BY 2 DESC;",
+    "id": "tpl_e6876cb2",
+    "created_at": "2026-08-20 17:12:38"
+  },
+  {
+    "title": "Test Fee Aggregation Query",
+    "description": "Automated test suite query",
+    "database": "MEFCampus",
+    "sql_script": "SELECT [DOWNLOADTYPE], SUM([SRNO]) AS [TotalSRNO]\nFROM [MEFCampus].dbo._GENERALFORMAT t1\nWHERE [DOWNLOADTYPE] IS NOT NULL\nGROUP BY [DOWNLOADTYPE]\nORDER BY 2 DESC;",
+    "id": "tpl_f0fadf99",
+    "created_at": "2026-08-20 17:07:05"
+  },
+  {
+    "title": "Test Fee Aggregation Query",
+    "description": "Automated test suite query",
+    "database": "MEFCampus",
+    "sql_script": "SELECT [DOWNLOADTYPE], SUM([SRNO]) AS [TotalSRNO]\nFROM [MEFCampus].dbo._GENERALFORMAT t1\nWHERE [DOWNLOADTYPE] IS NOT NULL\nGROUP BY [DOWNLOADTYPE]\nORDER BY 2 DESC;",
+    "id": "tpl_1abff603",
+    "created_at": "2026-08-20 17:04:40"
+  },
+  {
+    "title": "Test Fee Aggregation Query",
+    "description": "Automated test suite query",
+    "database": "MEFCampus",
+    "sql_script": "SELECT [DOWNLOADTYPE], SUM([SRNO]) AS [TotalSRNO]\nFROM [MEFCampus].dbo._GENERALFORMAT t1\nWHERE [DOWNLOADTYPE] IS NOT NULL\nGROUP BY [DOWNLOADTYPE]\nORDER BY 2 DESC;",
+    "id": "tpl_2c840f71",
+    "created_at": "2026-08-20 12:33:18"
+  },
+  {
+    "title": "Test Fee Aggregation Query",
+    "description": "Automated test suite query",
+    "database": "MEFCampus",
+    "sql_script": "SELECT [DOWNLOADTYPE], SUM([SRNO]) AS [TotalSRNO]\nFROM [MEFCampus].dbo._GENERALFORMAT t1\nWHERE [DOWNLOADTYPE] IS NOT NULL\nGROUP BY [DOWNLOADTYPE]\nORDER BY 2 DESC;",
+    "id": "tpl_b15aa989",
+    "created_at": "2026-08-20 11:25:53"
+  },
+  {
+    "title": "Test Fee Aggregation Query",
+    "description": "Automated test suite query",
+    "database": "MEFCampus",
+    "sql_script": "SELECT [DOWNLOADTYPE], SUM([SRNO]) AS [TotalSRNO]\nFROM [MEFCampus].dbo._GENERALFORMAT t1\nWHERE [DOWNLOADTYPE] IS NOT NULL\nGROUP BY [DOWNLOADTYPE]\nORDER BY 2 DESC;",
+    "id": "tpl_5fee22d4",
+    "created_at": "2026-08-20 11:20:44"
+  },
+  {
+    "title": "Test Fee Aggregation Query",
+    "description": "Automated test suite query",
+    "database": "MEFCampus",
+    "sql_script": "SELECT [DOWNLOADTYPE], SUM([SRNO]) AS [TotalSRNO]\nFROM [MEFCampus].dbo._GENERALFORMAT t1\nWHERE [DOWNLOADTYPE] IS NOT NULL\nGROUP BY [DOWNLOADTYPE]\nORDER BY 2 DESC;",
+    "id": "tpl_31ee022a",
+    "created_at": "2026-08-20 11:18:16"
+  },
+  {
+    "title": "Test Fee Aggregation Query",
+    "description": "Automated test suite query",
+    "database": "MEFCampus",
+    "sql_script": "SELECT [DOWNLOADTYPE], SUM([SRNO]) AS [TotalSRNO]\nFROM [MEFCampus].dbo._GENERALFORMAT t1\nWHERE [DOWNLOADTYPE] IS NOT NULL\nGROUP BY [DOWNLOADTYPE]\nORDER BY 2 DESC;",
+    "id": "tpl_ccddef72",
+    "created_at": "2026-08-20 11:13:45"
+  },
+  {
+    "title": "Test Fee Aggregation Query",
+    "description": "Automated test suite query",
+    "database": "MEFCampus",
+    "sql_script": "SELECT [DOWNLOADTYPE], SUM([SRNO]) AS [TotalSRNO]\nFROM [MEFCampus].dbo._GENERALFORMAT t1\nWHERE [DOWNLOADTYPE] IS NOT NULL\nGROUP BY [DOWNLOADTYPE]\nORDER BY 2 DESC;",
+    "id": "tpl_58c5e83a",
+    "created_at": "2026-08-20 10:56:07"
+  },
+  {
+    "title": "Test Fee Aggregation Query",
+    "description": "Automated test suite query",
+    "database": "MEFCampus",
+    "sql_script": "SELECT [DOWNLOADTYPE], SUM([SRNO]) AS [TotalSRNO]\nFROM [MEFCampus].dbo._GENERALFORMAT t1\nWHERE [DOWNLOADTYPE] IS NOT NULL\nGROUP BY [DOWNLOADTYPE]\nORDER BY 2 DESC;",
+    "id": "tpl_979dd3d3",
+    "created_at": "2026-08-20 10:53:52"
+  },
+  {
+    "title": "Test Fee Aggregation Query",
+    "description": "Automated test suite query",
+    "database": "MEFCampus",
+    "sql_script": "SELECT [DOWNLOADTYPE], SUM([SRNO]) AS [TotalSRNO]\nFROM [MEFCampus].dbo._GENERALFORMAT t1\nWHERE [DOWNLOADTYPE] IS NOT NULL\nGROUP BY [DOWNLOADTYPE]\nORDER BY 2 DESC;",
+    "id": "tpl_ab7c3488",
+    "created_at": "2026-08-20 10:48:36"
+  },
+  {
+    "title": "Test Fee Aggregation Query",
+    "description": "Automated test suite query",
+    "database": "MEFCampus",
+    "sql_script": "SELECT [DOWNLOADTYPE], SUM([SRNO]) AS [TotalSRNO]\nFROM [MEFCampus].dbo._GENERALFORMAT t1\nWHERE [DOWNLOADTYPE] IS NOT NULL\nGROUP BY [DOWNLOADTYPE]\nORDER BY 2 DESC;",
+    "id": "tpl_c8179ad6",
+    "created_at": "2026-08-20 10:39:56"
+  },
+  {
+    "title": "Test Fee Aggregation Query",
+    "description": "Automated test suite query",
+    "database": "MEFCampus",
+    "sql_script": "SELECT [DOWNLOADTYPE], SUM([SRNO]) AS [TotalSRNO]\nFROM [MEFCampus].dbo._GENERALFORMAT t1\nWHERE [DOWNLOADTYPE] IS NOT NULL\nGROUP BY [DOWNLOADTYPE]\nORDER BY 2 DESC;",
+    "id": "tpl_ba5a2f41",
+    "created_at": "2026-08-20 09:36:09"
+  },
+  {
+    "title": "Test Fee Aggregation Query",
+    "description": "Automated test suite query",
+    "database": "MEFCampus",
+    "sql_script": "SELECT [DOWNLOADTYPE], SUM([SRNO]) AS [TotalSRNO]\nFROM [MEFCampus].dbo._GENERALFORMAT t1\nWHERE [DOWNLOADTYPE] IS NOT NULL\nGROUP BY [DOWNLOADTYPE]\nORDER BY 2 DESC;",
+    "id": "tpl_5a5f9c46",
+    "created_at": "2026-08-19 17:40:52"
+  },
+  {
+    "title": "Test Fee Aggregation Query",
+    "description": "Automated test suite query",
+    "database": "MEFCampus",
+    "sql_script": "SELECT [DOWNLOADTYPE], SUM([SRNO]) AS [TotalSRNO]\nFROM [MEFCampus].dbo._GENERALFORMAT t1\nWHERE [DOWNLOADTYPE] IS NOT NULL\nGROUP BY [DOWNLOADTYPE]\nORDER BY 2 DESC;",
+    "id": "tpl_55c41e56",
+    "created_at": "2026-08-19 17:25:24"
+  },
+  {
+    "title": "Test Fee Aggregation Query",
+    "description": "Automated test suite query",
+    "database": "MEFCampus",
+    "sql_script": "SELECT [DOWNLOADTYPE], SUM([SRNO]) AS [TotalSRNO]\nFROM [MEFCampus].dbo._GENERALFORMAT t1\nWHERE [DOWNLOADTYPE] IS NOT NULL\nGROUP BY [DOWNLOADTYPE]\nORDER BY 2 DESC;",
+    "id": "tpl_6c554a78",
+    "created_at": "2026-08-19 17:21:56"
+  },
+  {
+    "title": "Test Fee Aggregation Query",
+    "description": "Automated test suite query",
+    "database": "MEFCampus",
+    "sql_script": "SELECT [DOWNLOADTYPE], SUM([SRNO]) AS [TotalSRNO]\nFROM [MEFCampus].dbo._GENERALFORMAT t1\nWHERE [DOWNLOADTYPE] IS NOT NULL\nGROUP BY [DOWNLOADTYPE]\nORDER BY 2 DESC;",
+    "id": "tpl_cf23ac1d",
+    "created_at": "2026-08-19 16:57:05"
+  },
+  {
+    "title": "Test Fee Aggregation Query",
+    "description": "Automated test suite query",
+    "database": "MEFCampus",
+    "sql_script": "SELECT [DOWNLOADTYPE], SUM([SRNO]) AS [TotalSRNO]\nFROM [MEFCampus].dbo._GENERALFORMAT t1\nWHERE [DOWNLOADTYPE] IS NOT NULL\nGROUP BY [DOWNLOADTYPE]\nORDER BY 2 DESC;",
+    "id": "tpl_85253e98",
+    "created_at": "2026-08-19 14:57:04"
+  },
+  {
+    "title": "Monthly Fee Aggregation",
+    "description": "Aggregates monthly fee receipts",
+    "database": "MEFCampus",
+    "sql_script": "SELECT [DOWNLOADTYPE], SUM([SRNO]) AS [TotalSRNO]\nFROM [MEFCampus].dbo._GENERALFORMAT t1\nWHERE [DOWNLOADTYPE] IS NOT NULL\nGROUP BY [DOWNLOADTYPE]\nORDER BY 2 DESC;",
+    "id": "tpl_7b8e6e8b",
+    "created_at": "2026-08-19 13:55:34"
+  }
+]

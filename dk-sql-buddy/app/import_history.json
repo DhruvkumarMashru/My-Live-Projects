@@ -1,0 +1,138 @@
+[
+  {
+    "timestamp": "2026-08-22 09:20:50",
+    "server": "103.254.53.98",
+    "database": "Ashish",
+    "rows_affected": 0,
+    "duration_ms": 681.35,
+    "status": "FAILED: (208, b\"Invalid object name 'Ashish.dbo.StudentMaster'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+  },
+  {
+    "timestamp": "2026-08-22 09:19:41",
+    "server": "103.254.53.98",
+    "database": "Ashish",
+    "rows_affected": 0,
+    "duration_ms": 782.98,
+    "status": "FAILED: (208, b\"Invalid object name 'Ashish.dbo.StudentMaster'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+  },
+  {
+    "timestamp": "2026-08-21 12:55:18",
+    "server": "103.254.53.98",
+    "database": "Ashish",
+    "rows_affected": 0,
+    "duration_ms": 789.49,
+    "status": "FAILED: (208, b\"Invalid object name 'Ashish.dbo.EmployeeMaster'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+  },
+  {
+    "timestamp": "2026-08-20 17:49:06",
+    "server": "210.212.183.19",
+    "database": "MEFHR",
+    "rows_affected": 0,
+    "duration_ms": 483.54,
+    "status": "FAILED: (207, b\"Invalid column name 'EntryDateTime'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+  },
+  {
+    "timestamp": "2026-08-20 17:49:05",
+    "server": "210.212.183.19",
+    "database": "MEFCampus",
+    "rows_affected": 0,
+    "duration_ms": 408.87,
+    "status": "FAILED: (207, b\"Invalid column name 'EntryDateTime'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+  },
+  {
+    "timestamp": "2026-08-20 17:49:05",
+    "server": "210.212.183.19",
+    "database": "MEFHR",
+    "rows_affected": 0,
+    "duration_ms": 436.57,
+    "status": "FAILED: (208, b\"Invalid object name 'dbo.MonitorDataTbl'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+  },
+  {
+    "timestamp": "2026-08-20 17:05:59",
+    "server": "210.212.183.19",
+    "database": "MEFCampus",
+    "rows_affected": 0,
+    "duration_ms": 15543.38,
+    "status": "FAILED: (207, b\"Invalid column name 'Amount'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+  },
+  {
+    "timestamp": "2026-08-20 17:05:19",
+    "server": "210.212.183.19",
+    "database": "MEFNotification",
+    "rows_affected": 0,
+    "duration_ms": 368.36,
+    "status": "FAILED: name 're' is not defined"
+  },
+  {
+    "timestamp": "2026-08-20 17:05:19",
+    "server": "210.212.183.19",
+    "database": "MEFCampus",
+    "rows_affected": 0,
+    "duration_ms": 361.3,
+    "status": "FAILED: name 're' is not defined"
+  },
+  {
+    "timestamp": "2026-08-20 17:05:18",
+    "server": "210.212.183.19",
+    "database": "MEFCampus",
+    "rows_affected": 0,
+    "duration_ms": 316.52,
+    "status": "FAILED: name 're' is not defined"
+  },
+  {
+    "timestamp": "2026-08-20 17:05:18",
+    "server": "210.212.183.19",
+    "database": "MEFHR",
+    "rows_affected": 0,
+    "duration_ms": 382.72,
+    "status": "FAILED: name 're' is not defined"
+  },
+  {
+    "timestamp": "2026-08-20 17:05:17",
+    "server": "210.212.183.19",
+    "database": "MEFHR",
+    "rows_affected": 0,
+    "duration_ms": 327.47,
+    "status": "FAILED: name 're' is not defined"
+  },
+  {
+    "timestamp": "2026-08-20 17:05:17",
+    "server": "210.212.183.19",
+    "database": "MEFCampus",
+    "rows_affected": 0,
+    "duration_ms": 465.08,
+    "status": "FAILED: name 're' is not defined"
+  },
+  {
+    "timestamp": "2026-08-20 16:55:30",
+    "server": "103.254.53.98",
+    "database": "MEFCampus",
+    "rows_affected": 0,
+    "duration_ms": 747.63,
+    "status": "SUCCESS"
+  },
+  {
+    "timestamp": "2026-08-20 16:51:46",
+    "server": "103.254.53.98",
+    "database": "MEFCampus",
+    "rows_affected": 0,
+    "duration_ms": 800.01,
+    "status": "SUCCESS"
+  },
+  {
+    "timestamp": "2026-08-20 16:50:54",
+    "server": "103.254.53.98",
+    "database": "Ashish",
+    "rows_affected": 0,
+    "duration_ms": 623.28,
+    "status": "FAILED: (8114, b'Error converting data type varchar to float.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n')"
+  },
+  {
+    "timestamp": "2026-08-20 16:50:51",
+    "server": "103.254.53.98",
+    "database": "COEPTechMIS",
+    "rows_affected": 0,
+    "duration_ms": 613.46,
+    "status": "FAILED: (18456, b\"Login failed for user 'support'.DB-Lib error message 20018, severity 14:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20002, severity 9:\\nAdaptive Server connection failed (103.254.53.98)\\nDB-Lib error message 20002, severity 9:\\nAdaptive Server connection failed (103.254.53.98)\\n\")"
+  }
+]

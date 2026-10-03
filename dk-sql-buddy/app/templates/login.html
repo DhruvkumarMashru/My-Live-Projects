@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — DK's SQL Buddy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent: #6c63ff;
+      --accent2: #a78bfa;
+      --glass-bg: rgba(255,255,255,0.05);
+      --glass-border: rgba(255,255,255,0.12);
+      --text: #e8e8f0;
+      --subtext: #9999bb;
+      --error: #ff6b8a;
+      --success: #4ade80;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0d0d1a;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Animated background orbs */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.25;
+      animation: float 8s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .orb1 { width: 600px; height: 600px; background: #6c63ff; top: -200px; left: -200px; animation-delay: 0s; }
+    .orb2 { width: 500px; height: 500px; background: #a78bfa; bottom: -200px; right: -150px; animation-delay: 3s; }
+    .orb3 { width: 300px; height: 300px; background: #38bdf8; top: 40%; left: 40%; animation-delay: 1.5s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-30px) scale(1.05); }
+    }
+
+    /* Login card */
+    .login-card {
+      position: relative;
+      z-index: 10;
+      background: rgba(20, 20, 40, 0.7);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 48px 44px;
+      width: 420px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(108,99,255,0.15);
+      animation: slideUp 0.5s ease;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo-wrap {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .logo-icon {
+      font-size: 48px;
+      display: block;
+      margin-bottom: 12px;
+      filter: drop-shadow(0 0 16px rgba(108,99,255,0.6));
+    }
+    .logo-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.5px;
+    }
+    .logo-sub {
+      font-size: 13px;
+      color: var(--subtext);
+      margin-top: 4px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--subtext);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 8px;
+    }
+    .input-wrap {
+      position: relative;
+    }
+    .input-wrap .icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      opacity: 0.5;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 12px 14px 12px 40px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .form-group input:focus {
+      border-color: var(--accent);
+      background: rgba(108,99,255,0.08);
+      box-shadow: 0 0 0 3px rgba(108,99,255,0.2);
+    }
+    .form-group input::placeholder { color: rgba(255,255,255,0.25); }
+
+    .toggle-password {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--subtext);
+      cursor: pointer;
+      font-size: 16px;
+      padding: 4px;
+      transition: color 0.2s;
+    }
+    .toggle-password:hover { color: var(--accent2); }
+
+    .btn-login {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #6c63ff 0%, #a78bfa 100%);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: all 0.25s;
+      letter-spacing: 0.3px;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-login:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(108,99,255,0.45); }
+    .btn-login:active { transform: translateY(0); }
+    .btn-login:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .btn-login .spinner {
+      display: none;
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .error-msg {
+      display: none;
+      background: rgba(255,107,138,0.12);
+      border: 1px solid rgba(255,107,138,0.3);
+      color: var(--error);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 13px;
+      margin-top: 16px;
+      text-align: center;
+    }
+
+    .footer-text {
+      text-align: center;
+      margin-top: 28px;
+      font-size: 12px;
+      color: var(--subtext);
+    }
+    .footer-text span {
+      color: var(--accent2);
+    }
+
+    /* Password strength dots */
+    .strength-bar {
+      display: none;
+      gap: 4px;
+      margin-top: 6px;
+    }
+    .strength-dot {
+      height: 3px;
+      flex: 1;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.1);
+      transition: background 0.3s;
+    }
+  </style>
+</head>
+<body>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+
+  <div class="login-card">
+    <div class="logo-wrap">
+      <span class="logo-icon">🧠</span>
+      <div class="logo-title">DK's SQL Buddy</div>
+      <div class="logo-sub">Enterprise AI SQL & Data Management Portal</div>
+    </div>
+
+    <form id="loginForm" onsubmit="doLogin(event)">
+      <div class="form-group">
+        <label>Username</label>
+        <div class="input-wrap">
+          <span class="icon">👤</span>
+          <input type="text" id="username" placeholder="Enter your username" autocomplete="username" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <div class="input-wrap">
+          <span class="icon">🔒</span>
+          <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password" required>
+          <button type="button" class="toggle-password" onclick="togglePwd()" id="toggleBtn">👁️</button>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-login" id="loginBtn">
+        <span id="btnText">Sign In</span>
+        <div class="spinner" id="btnSpinner"></div>
+      </button>
+
+      <div class="error-msg" id="errorMsg"></div>
+    </form>
+
+    <div class="footer-text">
+      Secured by <span>DK's SQL Buddy v2.0</span> &nbsp;•&nbsp; Role-Based Access Control
+    </div>
+  </div>
+
+  <script>
+    function togglePwd() {
+      const inp = document.getElementById('password');
+      const btn = document.getElementById('toggleBtn');
+      if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
+      else { inp.type = 'password'; btn.textContent = '👁️'; }
+    }
+
+    async function doLogin(e) {
+      e.preventDefault();
+      const btn = document.getElementById('loginBtn');
+      const btnText = document.getElementById('btnText');
+      const spinner = document.getElementById('btnSpinner');
+      const errDiv = document.getElementById('errorMsg');
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+
+      btn.disabled = true;
+      btnText.style.display = 'none';
+      spinner.style.display = 'block';
+      errDiv.style.display = 'none';
+
+      try {
+        const resp = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password }),
+          credentials: 'include'
+        });
+        const data = await resp.json();
+        if (resp.ok && data.success) {
+          window.location.href = '/';
+        } else {
+          errDiv.textContent = data.detail || 'Login failed. Please check your credentials.';
+          errDiv.style.display = 'block';
+        }
+      } catch (err) {
+        errDiv.textContent = 'Connection error. Please make sure the server is running.';
+        errDiv.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+        btnText.style.display = 'block';
+        spinner.style.display = 'none';
+      }
+    }
+
+    // Auto-focus username
+    document.getElementById('username').focus();
+  </script>
+</body>
+</html>
