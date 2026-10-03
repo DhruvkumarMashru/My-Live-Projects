@@ -1,0 +1,27 @@
+// ignore_for_file: must_be_immutable, camel_case_types, file_names
+
+import 'package:flutter/material.dart';
+
+class buttonContainer extends StatelessWidget {
+  buttonContainer({super.key, @required this.buttonContainerText});
+  String? buttonContainerText;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.only(left: 20, right: 20),
+      padding: const EdgeInsets.all(5),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          color: const Color.fromARGB(255, 39, 62, 82)),
+      child: Center(
+        child: Text(buttonContainerText!,
+            style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            )),
+      ),
+    );
+  }
+}

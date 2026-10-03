@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1071862592642",
+    "project_id": "store-management-app-82e45",
+    "storage_bucket": "store-management-app-82e45.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1071862592642:android:257bf18f479e38e4d0b09b",
+        "android_client_info": {
+          "package_name": "com.example.store_management_modern"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1071862592642-0vrrb3e8v0ao9klb26qe4h1tob2g6ajo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.store_management_modern",
+            "certificate_hash": "119cf75cf9bb6a4b7805cf70b9154474eef99c22"
+          }
+        },
+        {
+          "client_id": "1071862592642-3kerr3sutu3lgt5lgst789ngh3t0hstt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnW9821cj9X7NgEMtPGHqn6K2yd3dgxS8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1071862592642-3kerr3sutu3lgt5lgst789ngh3t0hstt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
