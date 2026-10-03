@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GlaucoScan AI — Advanced Retinal OCT Glaucoma Detection</title>
+  <meta name="description" content="AI-powered Early Glaucoma Detection System using Deep Learning on Retinal OCT Images."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/static/css/style.css"/>
+</head>
+<body>
+
+<!-- ── Animated Background ─────────────────────────────────────── -->
+<div class="bg-gradient"></div>
+<div class="particles" id="particles"></div>
+
+<!-- ── Navigation ──────────────────────────────────────────────── -->
+<nav class="navbar">
+  <div class="nav-brand">
+    <div class="nav-icon">👁️</div>
+    <span class="nav-title">GlaucoScan <span class="ai-badge">AI</span></span>
+  </div>
+  <div class="nav-links">
+    <a href="/" class="nav-link active" id="nav-home">Home</a>
+    <a href="/dashboard" class="nav-link" id="nav-dashboard">Dashboard</a>
+    <a href="/compare" class="nav-link" id="nav-compare">Model Comparison</a>
+  </div>
+  <div class="nav-status">
+    <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme" title="Switch between Light and Dark mode">🌓</button>
+    <div class="status-dot"></div>
+    <span class="status-text">System Online</span>
+  </div>
+</nav>
+
+<!-- ── Hero Section ─────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span>🔬</span> Advanced Retinal Diagnostics System — Clinical AI
+    </div>
+    <h1 class="hero-title">
+      Retinal OCT-Based<br/>
+      <span class="gradient-text">Early Glaucoma Detection</span>
+    </h1>
+    <p class="hero-subtitle">
+      Multi-model deep learning ensemble using CNN, VGG16, ResNet50 &amp; EfficientNet.
+      Upload a retinal OCT scan for instant AI-powered glaucoma screening with Grad-CAM explainability.
+    </p>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+      <div class="stat-item">
+        <span class="stat-number">{{ stats.total_predictions }}</span>
+        <span class="stat-label">Total Scans</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-number">5</span>
+        <span class="stat-label">AI Models</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-number">96%+</span>
+        <span class="stat-label">Ensemble Accuracy</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-number">&lt;100ms</span>
+        <span class="stat-label">Inference Time</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Main Upload Section ──────────────────────────────────────── -->
+<main class="main-content">
+  <div class="upload-grid">
+
+    <!-- Upload Panel -->
+    <div class="glass-card upload-card" id="upload-card">
+      <div class="card-header">
+        <div class="card-icon">📤</div>
+        <div>
+          <h2 class="card-title">Upload OCT Scan</h2>
+          <p class="card-subtitle">PNG, JPG, BMP — max 16MB</p>
+        </div>
+      </div>
+
+      <!-- Patient Info (optional) -->
+      <div class="patient-section">
+        <label class="field-label">Patient Information (Optional)</label>
+        <div class="patient-row">
+          <input type="text" id="patient-name" class="field-input" placeholder="Patient Name"/>
+          <input type="number" id="patient-age" class="field-input" placeholder="Age" min="1" max="120"/>
+          <select id="patient-gender" class="field-input">
+            <option value="">Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Model Selector -->
+      <div class="model-section">
+        <label class="field-label">Select AI Model</label>
+        <div class="model-grid">
+          {% for model in available_models %}
+          <div class="model-card {% if model.name == 'efficientnet' %}selected{% endif %} {% if not model.trained %}untrained{% endif %}"
+               data-model="{{ model.name }}"
+               onclick="selectModel('{{ model.name }}', this)"
+               id="model-{{ model.name }}">
+            <div class="model-icon">
+              {% if model.name == 'cnn' %}🧠
+              {% elif model.name == 'vgg16' %}🔷
+              {% elif model.name == 'resnet50' %}⚡
+              {% elif model.name == 'efficientnet' %}🎯
+              {% else %}🔮{% endif %}
+            </div>
+            <div class="model-info">
+              <span class="model-display">{{ model.display }}</span>
+              <span class="model-status {% if model.trained %}trained{% else %}pending{% endif %}">
+                {% if model.trained %}✅ Ready{% else %}⏳ Train First{% endif %}
+              </span>
+            </div>
+          </div>
+          {% endfor %}
+          <!-- Ensemble model card -->
+          <div class="model-card ensemble-card"
+               data-model="ensemble"
+               onclick="selectModel('ensemble', this)"
+               id="model-ensemble">
+            <div class="model-icon">🏆</div>
+            <div class="model-info">
+              <span class="model-display">Ensemble</span>
+              <span class="model-status pending">Best Accuracy</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Drag & Drop Upload Zone -->
+      <div class="drop-zone" id="drop-zone"
+           ondragover="handleDragOver(event)"
+           ondragleave="handleDragLeave(event)"
+           ondrop="handleDrop(event)"
+           onclick="document.getElementById('file-input').click()">
+        <div class="drop-icon" id="drop-icon">🫁</div>
+        <div class="drop-text" id="drop-text">
+          <strong>Drag & Drop OCT Image Here</strong>
+          <span>or click to browse files</span>
+        </div>
+        <div class="drop-hint">Retinal OCT scan images only</div>
+        <input type="file" id="file-input" accept=".png,.jpg,.jpeg,.bmp,.tiff"
+               onchange="handleFileSelect(event)" hidden/>
+      </div>
+
+      <!-- Preview -->
+      <div class="image-preview-container" id="preview-container" style="display:none">
+        <img id="image-preview" class="image-preview" alt="Selected OCT scan"/>
+        <button class="btn-clear" onclick="clearImage()">✕ Clear</button>
+      </div>
+
+      <!-- Options -->
+      <div class="options-row">
+        <label class="toggle-label">
+          <input type="checkbox" id="gradcam-toggle" checked/>
+          <span class="toggle-slider"></span>
+          Generate Grad-CAM Heatmap
+        </label>
+      </div>
+
+      <!-- Submit Button -->
+      <button class="btn-predict" id="predict-btn" onclick="runPrediction()" disabled>
+        <span class="btn-icon">🔍</span>
+        Analyze with AI
+        <div class="btn-shimmer"></div>
+      </button>
+    </div>
+
+    <!-- Results Panel -->
+    <div class="glass-card results-card" id="results-card">
+      <!-- Empty State -->
+      <div class="empty-state" id="empty-state">
+        <div class="empty-icon">👁️‍🗨️</div>
+        <h3>No Analysis Yet</h3>
+        <p>Upload a retinal OCT image to get instant AI-powered glaucoma detection results with visual explanation.</p>
+        <div class="feature-list">
+          <div class="feature-item">🎯 <span>Multi-model prediction comparison</span></div>
+          <div class="feature-item">🔥 <span>Grad-CAM visual heatmaps</span></div>
+          <div class="feature-item">📊 <span>Confidence scoring</span></div>
+          <div class="feature-item">💾 <span>Automatic database storage</span></div>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div class="loading-state" id="loading-state" style="display:none">
+        <div class="brain-animation">
+          <div class="brain-ring"></div>
+          <div class="brain-ring ring-2"></div>
+          <div class="brain-ring ring-3"></div>
+          <div class="brain-icon">🧠</div>
+        </div>
+        <h3>AI Analyzing OCT Scan...</h3>
+        <p id="loading-step">Preprocessing image with CLAHE...</p>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      </div>
+
+      <!-- Results State -->
+      <div class="results-state" id="results-state" style="display:none">
+
+        <!-- Verdict Banner -->
+        <div class="verdict-banner" id="verdict-banner">
+          <div class="verdict-icon" id="verdict-icon">✅</div>
+          <div class="verdict-text">
+            <h2 id="verdict-title">Normal Retina</h2>
+            <p id="verdict-sub">No signs of glaucoma detected</p>
+          </div>
+          <div class="risk-badge" id="risk-badge">LOW RISK</div>
+        </div>
+
+        <!-- Confidence Meter -->
+        <div class="confidence-section">
+          <div class="confidence-row">
+            <span class="conf-label">Normal</span>
+            <div class="conf-bar-track">
+              <div class="conf-bar normal-bar" id="bar-normal"></div>
+            </div>
+            <span class="conf-pct" id="pct-normal">0%</span>
+          </div>
+          <div class="confidence-row">
+            <span class="conf-label">Glaucoma</span>
+            <div class="conf-bar-track">
+              <div class="conf-bar glaucoma-bar" id="bar-glaucoma"></div>
+            </div>
+            <span class="conf-pct" id="pct-glaucoma">0%</span>
+          </div>
+        </div>
+
+        <!-- Grad-CAM Section -->
+        <div class="gradcam-section" id="gradcam-section" style="display:none">
+          <h3 class="section-title">🔥 Grad-CAM Visual Explanation</h3>
+          <p class="section-desc">Heatmap showing regions the AI focused on for its decision:</p>
+          <div class="gradcam-images">
+            <div class="gradcam-img-wrap">
+              <img id="original-img" class="gradcam-img" alt="Original OCT"/>
+              <span class="img-label">Original OCT</span>
+            </div>
+            <div class="gradcam-img-wrap">
+              <img id="gradcam-img" class="gradcam-img" alt="Grad-CAM Heatmap"/>
+              <span class="img-label">AI Attention Map</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Meta Info -->
+        <div class="meta-row">
+          <div class="meta-item">
+            <span class="meta-label">Model Used</span>
+            <span class="meta-value" id="meta-model">—</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Inference Time</span>
+            <span class="meta-value" id="meta-time">—</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Timestamp</span>
+            <span class="meta-value" id="meta-ts">—</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-row">
+          <button class="btn-action" onclick="analyzeAnother()">🔄 Analyze Another</button>
+          <button class="btn-action secondary" onclick="viewDashboard()">📊 View Dashboard</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ── Models Info Section ──────────────────────────────────────── -->
+<section class="models-section">
+  <h2 class="section-heading">Our 5 Deep Learning Models</h2>
+  <div class="models-row">
+    <div class="model-info-card">
+      <div class="mi-icon">🧠</div>
+      <h3>Custom CNN</h3>
+      <p>Purpose-built convolutional network with residual connections. Fast and lightweight baseline.</p>
+      <div class="mi-acc">~88% Acc</div>
+    </div>
+    <div class="model-info-card">
+      <div class="mi-icon">🔷</div>
+      <h3>VGG16</h3>
+      <p>Deep 16-layer network pretrained on ImageNet. Fine-tuned for retinal OCT feature extraction.</p>
+      <div class="mi-acc">~91% Acc</div>
+    </div>
+    <div class="model-info-card featured">
+      <div class="mi-icon">⚡</div>
+      <h3>ResNet50</h3>
+      <p>50-layer residual network. Skip connections prevent vanishing gradients. Strong performer.</p>
+      <div class="mi-acc">~93% Acc</div>
+    </div>
+    <div class="model-info-card featured">
+      <div class="mi-icon">🎯</div>
+      <h3>EfficientNetB0</h3>
+      <p>Compound scaled network with optimal depth/width/resolution balance. Most efficient.</p>
+      <div class="mi-acc">~95% Acc</div>
+    </div>
+    <div class="model-info-card gold">
+      <div class="mi-icon">🏆</div>
+      <h3>Ensemble</h3>
+      <p>Weighted combination of best 3 models. Highest accuracy through consensus prediction.</p>
+      <div class="mi-acc">~96%+ Acc</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ────────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-brand">👁️ GlaucoScan AI</div>
+    <p>Advanced Retinal OCT-Based Early Glaucoma Detection System</p>
+    <p class="footer-note">Clinical Intelligence | Deep Learning | PyTorch | Flask</p>
+    <p class="footer-disclaimer">⚠️ For diagnostic assistance only. Not a substitute for professional medical advice.</p>
+  </div>
+</footer>
+
+<script src="/static/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+# ============================================================
+# Advanced Retinal OCT-Based Glaucoma Detection System
+# System Requirements
+# Python 3.9+ | PyTorch | Flask
+# ============================================================
+
+# ── Core Deep Learning ──────────────────────────────────────
+torch>=2.0.0
+torchvision>=0.15.0
+torchaudio>=2.0.0
+
+# ── Computer Vision ─────────────────────────────────────────
+opencv-python>=4.8.0
+Pillow>=10.0.0
+albumentations>=1.3.1
+scikit-image>=0.21.0
+
+# ── Data Science & ML ───────────────────────────────────────
+numpy>=1.24.0
+pandas>=2.0.0
+scikit-learn>=1.3.0
+scipy>=1.11.0
+
+# ── Visualization ───────────────────────────────────────────
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.15.0
+
+# ── Grad-CAM Explainability ─────────────────────────────────
+grad-cam>=1.4.8
+
+# ── Web Application ─────────────────────────────────────────
+Flask>=3.0.0
+Flask-SQLAlchemy>=3.1.0
+Werkzeug>=3.0.0
+
+# ── Dataset Download ────────────────────────────────────────
+kaggle>=1.5.16
+
+# ── Report Generation ───────────────────────────────────────
+reportlab>=4.0.0
+fpdf2>=2.7.0
+
+# ── Jupyter Notebooks ───────────────────────────────────────
+jupyter>=1.0.0
+notebook>=7.0.0
+ipywidgets>=8.0.0
+
+# ── Utilities ───────────────────────────────────────────────
+tqdm>=4.66.0
+colorama>=0.4.6
+python-dotenv>=1.0.0
+requests>=2.31.0
+
+# ── Mixed Precision (for 2GB GPU) ───────────────────────────
+# torch already includes amp (torch.cuda.amp)

@@ -5,6 +5,12 @@
 *.h5
 *.onnx
 
+# Large datasets (thousands of raw fundus photos - downloaded separately)
+glaucoma-detection-ml/data/raw/*
+!glaucoma-detection-ml/data/raw/.gitkeep
+glaucoma-detection-ml/data/processed/*
+!glaucoma-detection-ml/data/processed/.gitkeep
+
 # Python artifacts
 __pycache__/
 *.py[cod]
