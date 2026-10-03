@@ -1,4 +1,4 @@
-﻿# 🚀 My Projects — Dhruvkumar Mashru
+# 🚀 My Projects — Dhruvkumar Mashru
 
 > A curated collection of projects spanning **Machine Learning**, **Android Development**, **Flutter**, **.NET**, **Python**, **PHP**, and **Web** technologies.
 
@@ -17,8 +17,7 @@ my-projects/
 ├── anomaly-detector/             # Python anomaly detection tool
 ├── store-management-flutter/     # Flutter stock/store management app
 ├── erp-governance-dotnet/        # .NET ERP governance platform
-├── dk-sql-buddy/                 # Python SQL assistant tool
-└── portfolio-website/            # Personal portfolio (HTML/CSS/JS)
+└── dk-sql-buddy/                 # Python SQL assistant tool
 ```
 
 ---
@@ -219,21 +218,6 @@ python run_server.py
 
 ---
 
-## 🌐 11. Portfolio Website
-
-**Folder:** `portfolio-website/`  
-**Tech Stack:** HTML · CSS · JavaScript
-
-Personal portfolio website showcasing skills, projects, and experience.
-
-**Features:**
-- ⚡ Single-page application with smooth animations
-- 🎨 Modern dark-mode UI
-- 📱 Fully responsive design
-- 🔗 Direct links to projects and contact
-
----
-
 ## 🛠️ Tech Stack Summary
 
 | Domain | Technologies |
@@ -251,8 +235,6 @@ Personal portfolio website showcasing skills, projects, and experience.
 ## 👤 Author
 
 **Dhruvkumar Mashru**
-
-- 💼 [LinkedIn](https://linkedin.com/in/dhruvkumar-mashru)
 
 ---
 
