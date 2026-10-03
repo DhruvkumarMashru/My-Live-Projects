@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ocean Sentry AI - Plastic Waste Accumulation Prediction Dashboard</title>
+    <meta name="description" content="AI platform to analyze, forecast, and map plastic waste accumulation and density distributions in global oceans using machine learning.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="dark-theme">
+    <div class="app-container">
+        <!-- HEADER DECK -->
+        <header class="app-header">
+            <div class="logo-area">
+                <i class="fa-solid fa-water-lunate logo-icon"></i>
+                <div class="brand-text">
+                    <h1>OCEAN SENTRY AI</h1>
+                    <p>Machine Learning Marine Debris Forecasting System</p>
+                </div>
+            </div>
+            <div class="header-controls">
+                <button id="theme-toggle-btn" class="control-btn" title="Toggle Theme" aria-label="Toggle light/dark theme">
+                    <i class="fa-solid fa-sun"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- KPI ANALYTICS GRID -->
+        <section class="kpi-grid">
+            <div class="kpi-card frosted" id="kpi-avg-density-card">
+                <div class="kpi-info">
+                    <span class="kpi-label">Average Predicted Debris</span>
+                    <h2 class="kpi-val" id="avg-density">{{ stats.avg_density }} <span class="unit">g/km²</span></h2>
+                </div>
+                <div class="kpi-icon-wrap cyan">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                </div>
+            </div>
+            
+            <div class="kpi-card frosted" id="kpi-hotspot-card">
+                <div class="kpi-info">
+                    <span class="kpi-label">Current Hotspot Location</span>
+                    <h2 class="kpi-val text-scroll" id="max-hotspot">{{ stats.hotspot }}</h2>
+                </div>
+                <div class="kpi-icon-wrap red">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+            </div>
+
+            <div class="kpi-card frosted" id="kpi-total-logs-card">
+                <div class="kpi-info">
+                    <span class="kpi-label">Total SQLite Database Logs</span>
+                    <h2 class="kpi-val" id="total-logs">{{ stats.total_logs }}</h2>
+                </div>
+                <div class="kpi-icon-wrap blue">
+                    <i class="fa-solid fa-database"></i>
+                </div>
+            </div>
+
+            <div class="kpi-card frosted" id="kpi-model-accuracy-card">
+                <div class="kpi-info">
+                    <span class="kpi-label">Random Forest Regressor R² Accuracy</span>
+                    <h2 class="kpi-val" id="model-accuracy">{{ stats.model_accuracy }}</h2>
+                </div>
+                <div class="kpi-icon-wrap green">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- MAIN LAYOUT COLUMNS -->
+        <main class="main-layout">
+            <!-- COLUMN 1: CONTROL DECK (INPUTS) -->
+            <section class="control-deck-section frosted">
+                <div class="section-title-wrap">
+                    <i class="fa-solid fa-sliders section-icon"></i>
+                    <h3>Physical Feature Configuration</h3>
+                </div>
+                <form id="prediction-form" class="prediction-form">
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="latitude">Latitude (-90.0 to 90.0) <span class="req">*</span></label>
+                            <input type="number" id="latitude" name="latitude" min="-90" max="90" step="0.0001" value="12.3504" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="longitude">Longitude (-180.0 to 180.0) <span class="req">*</span></label>
+                            <input type="number" id="longitude" name="longitude" min="-180" max="180" step="0.0001" value="74.2210" required>
+                        </div>
+                    </div>
+
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <label for="distance_to_coast">Proximity to Shoreline (Distance in km)</label>
+                            <span class="slider-val" id="distance_to_coast_val">15.5 km</span>
+                        </div>
+                        <input type="range" id="distance_to_coast" name="distance_to_coast" min="0.1" max="250" step="0.1" value="15.5" class="custom-slider">
+                    </div>
+
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <label for="river_discharge">Estuary Runoff Volume (River Discharge in m³/s)</label>
+                            <span class="slider-val" id="river_discharge_val">45.0 m³/s</span>
+                        </div>
+                        <input type="range" id="river_discharge" name="river_discharge" min="0.0" max="1200" step="1.0" value="45.0" class="custom-slider">
+                    </div>
+
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <label for="current_speed">Surface Current Speed (HYCOM Vector Magnitude in m/s)</label>
+                            <span class="slider-val" id="current_speed_val">0.65 m/s</span>
+                        </div>
+                        <input type="range" id="current_speed" name="current_speed" min="0.01" max="2.5" step="0.01" value="0.65" class="custom-slider">
+                    </div>
+
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <label for="wind_velocity">Wind Velocity (NOAA Wind Indices in m/s)</label>
+                            <span class="slider-val" id="wind_velocity_val">6.8 m/s</span>
+                        </div>
+                        <input type="range" id="wind_velocity" name="wind_velocity" min="0.1" max="25.0" step="0.1" value="6.8" class="custom-slider">
+                    </div>
+
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <label for="population_density">Coastal Population Density (within 30km, people/km²)</label>
+                            <span class="slider-val" id="population_density_val">850 people/km²</span>
+                        </div>
+                        <input type="range" id="population_density" name="population_density" min="0" max="15000" step="10" value="850" class="custom-slider">
+                    </div>
+
+                    <button type="submit" id="predict-btn" class="action-btn">
+                        <i class="fa-solid fa-radar-waveform"></i> Analyze Debris Accumulation
+                    </button>
+                </form>
+            </section>
+
+            <!-- COLUMN 2: VISUAL OUTCOMES & INTERPRETATION -->
+            <section class="results-visuals-section">
+                <!-- GAUGE CARD -->
+                <div class="gauge-card frosted">
+                    <div class="section-title-wrap">
+                        <i class="fa-solid fa-gauge-high section-icon"></i>
+                        <h3>Predicted Plastic Density</h3>
+                    </div>
+                    <div class="gauge-inner">
+                        <div class="gauge-meter">
+                            <svg class="gauge-svg" viewBox="0 0 100 50">
+                                <path class="gauge-bg-arc" d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="#223b5c" stroke-width="10" stroke-linecap="round"></path>
+                                <path id="gauge-fill-arc" class="gauge-fill-arc animate-arc" d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="url(#cyan-teal-grad)" stroke-width="10" stroke-linecap="round" stroke-dasharray="125.6" stroke-dashoffset="125.6"></path>
+                                <defs>
+                                    <linearGradient id="cyan-teal-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#00f2fe"></stop>
+                                        <stop offset="100%" stop-color="#4facfe"></stop>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <div class="gauge-center-text">
+                                <h4 id="output-val">---</h4>
+                                <span class="unit">grams / km²</span>
+                            </div>
+                        </div>
+                        <div class="gauge-label-zone">
+                            <span id="output-category" class="category-pill muted">Awaiting Inference Input</span>
+                            <p class="coords-subtitle" id="output-coords">Location: --, --</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ANALYTIC FEATURE IMPORTANCE -->
+                <div class="chart-card frosted">
+                    <div class="section-title-wrap">
+                        <i class="fa-solid fa-chart-simple section-icon"></i>
+                        <h3>Model Feature Importance (SHAP values proxy)</h3>
+                    </div>
+                    <div class="chart-canvas-wrapper">
+                        <canvas id="importanceChart"></canvas>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- DATA REGISTRY SECTION (SQLITE LOGS) -->
+        <section class="data-registry-section frosted">
+            <div class="registry-header">
+                <div class="section-title-wrap">
+                    <i class="fa-solid fa-list-check section-icon"></i>
+                    <h3>Prediction History Logs (SQLite Registry)</h3>
+                </div>
+                <div class="search-bar-wrap">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="registry-search" placeholder="Filter by category or coordinates..." aria-label="Search logs">
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="registry-table" id="registry-table">
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Coordinates</th>
+                            <th>Coast Dist</th>
+                            <th>River Runoff</th>
+                            <th>Current</th>
+                            <th>Wind</th>
+                            <th>Population</th>
+                            <th>Predicted Density</th>
+                            <th>Category</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="registry-tbody">
+                        <tr>
+                            <td colspan="10" class="empty-table-msg">Loading logged transactions history...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Custom Script -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+    "r2_score": 0.9651699714870378,
+    "rmse": 1113.9730375985882,
+    "total_samples": 1500,
+    "features": [
+        "distance_to_coast",
+        "river_discharge",
+        "current_speed",
+        "wind_velocity",
+        "population_density"
+    ]
+}
