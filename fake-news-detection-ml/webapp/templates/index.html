@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake News Detection Portal — NLP & Machine Learning</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="dark-theme">
+    <div class="app-container">
+        <!-- HEADER -->
+        <header class="app-header frosted">
+            <div class="logo-area">
+                <i class="fa-solid fa-newspaper logo-icon"></i>
+                <div class="brand-text">
+                    <h1>VERITRACK AI</h1>
+                    <p>NLP & Machine Learning Fake News Detection System</p>
+                </div>
+            </div>
+            <div class="header-controls">
+                <button id="theme-toggle-btn" class="control-btn" title="Toggle Theme" aria-label="Toggle Theme">
+                    <i class="fa-solid fa-sun"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- NAVIGATION LINK DECK -->
+        <nav class="nav-deck frosted">
+            <a href="/" class="nav-link active"><i class="fa-solid fa-magnifying-glass-chart"></i> Analyze Text</a>
+            <a href="/dashboard" class="nav-link"><i class="fa-solid fa-chart-line"></i> Dashboard Logs</a>
+            <a href="/compare" class="nav-link"><i class="fa-solid fa-scale-balanced"></i> Benchmark Models</a>
+        </nav>
+
+        <!-- MAIN LAYOUT -->
+        <main class="main-layout">
+            <!-- INPUT PANEL -->
+            <section class="input-panel frosted">
+                <div class="section-title-wrap">
+                    <i class="fa-solid fa-pen-to-square section-icon"></i>
+                    <h3>Article Source Configuration</h3>
+                </div>
+                <form id="analyze-form">
+                    <div class="form-group">
+                        <label for="article-title">Article Headline (Optional)</label>
+                        <input type="text" id="article-title" placeholder="Enter headline title here..." aria-label="Article Title">
+                    </div>
+                    <div class="form-group">
+                        <label for="article-text">Article Text Body <span class="req">*</span></label>
+                        <textarea id="article-text" rows="10" placeholder="Paste full news article text here for analysis..." aria-label="Article Text" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="model-select">Classification Model Selection</label>
+                        <select id="model-select" aria-label="Model Selection">
+                            {% for model in available_models %}
+                            <option value="{{ model.key }}" {% if model.key == 'ensemble' %}selected{% endif %}>
+                                {{ model.name }} {% if not model.trained %}(Untrained Fallback){% endif %}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" id="analyze-btn" class="action-btn">
+                        <i class="fa-solid fa-microscope"></i> Verify Authenticity
+                    </button>
+                </form>
+            </section>
+
+            <!-- RESULTS & EXPLAINER PANELS -->
+            <section class="results-panel">
+                <!-- OUTCOME CARD -->
+                <div class="predict-out-card frosted">
+                    <h4 class="prediction-title">Analysis Verdict</h4>
+                    <div id="pred-pill" class="prediction-pill awaiting">Awaiting Input</div>
+                    <p id="confidence-score" class="coords-subtitle">Enter article text and submit analysis</p>
+                    <p id="output-model-used" class="coords-subtitle" style="font-style: italic;"></p>
+                </div>
+
+                <!-- EXPLAINABILITY KEYWORDS HIGHLIGHT CARD -->
+                <div class="explain-panel frosted">
+                    <div class="section-title-wrap">
+                        <i class="fa-solid fa-lightbulb section-icon"></i>
+                        <h3>NLP Attribute Explainability Map</h3>
+                    </div>
+                    <div class="explain-legend">
+                        <div class="legend-item">
+                            <div class="legend-color fake"></div>
+                            <span>Clickbait / Sensationalist Word (Fake Indicator)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color real"></div>
+                            <span>Factual / Objective Word (Genuine Indicator)</span>
+                        </div>
+                    </div>
+                    <div id="explain-box" class="explain-content-box">
+                        Submission content token highlights will render here...
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Script -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

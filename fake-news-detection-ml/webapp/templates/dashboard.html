@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Registry Logs — VeriTrack AI Dashboard</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="dark-theme">
+    <div class="app-container">
+        <!-- HEADER -->
+        <header class="app-header frosted">
+            <div class="logo-area">
+                <i class="fa-solid fa-newspaper logo-icon"></i>
+                <div class="brand-text">
+                    <h1>VERITRACK AI</h1>
+                    <p>NLP & Machine Learning Fake News Detection System</p>
+                </div>
+            </div>
+            <div class="header-controls">
+                <button id="theme-toggle-btn" class="control-btn" title="Toggle Theme" aria-label="Toggle Theme">
+                    <i class="fa-solid fa-sun"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- NAVIGATION LINK DECK -->
+        <nav class="nav-deck frosted">
+            <a href="/" class="nav-link"><i class="fa-solid fa-magnifying-glass-chart"></i> Analyze Text</a>
+            <a href="/dashboard" class="nav-link active"><i class="fa-solid fa-chart-line"></i> Dashboard Logs</a>
+            <a href="/compare" class="nav-link"><i class="fa-solid fa-scale-balanced"></i> Benchmark Models</a>
+        </nav>
+
+        <!-- KPI GRID -->
+        <section class="kpi-grid">
+            <div class="kpi-card frosted">
+                <div class="kpi-info">
+                    <span class="kpi-label">Total Articles Scanned</span>
+                    <h2 class="kpi-val">{{ total }}</h2>
+                </div>
+                <div class="kpi-icon-wrap cyan">
+                    <i class="fa-solid fa-folder-open"></i>
+                </div>
+            </div>
+            
+            <div class="kpi-card frosted">
+                <div class="kpi-info">
+                    <span class="kpi-label">Sensationalist / Fake Flagged</span>
+                    <h2 class="kpi-val">{{ fake_count }}</h2>
+                </div>
+                <div class="kpi-icon-wrap rose">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                </div>
+            </div>
+
+            <div class="kpi-card frosted">
+                <div class="kpi-info">
+                    <span class="kpi-label">Factual / Genuine Verified</span>
+                    <h2 class="kpi-val">{{ real_count }}</h2>
+                </div>
+                <div class="kpi-icon-wrap emerald">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+            </div>
+
+            <div class="kpi-card frosted" id="avg-confidence-card">
+                <div class="kpi-info">
+                    <span class="kpi-label">Database Logs Registry</span>
+                    <h2 class="kpi-val">SQLite</h2>
+                </div>
+                <div class="kpi-icon-wrap blue">
+                    <i class="fa-solid fa-database"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- REGISTRY LOGS TABLE -->
+        <section class="registry-panel frosted">
+            <div class="registry-header">
+                <div class="section-title-wrap">
+                    <i class="fa-solid fa-list-check section-icon"></i>
+                    <h3>Prediction History Logs</h3>
+                </div>
+                <div class="search-bar-wrap">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="registry-search" placeholder="Filter by title or verdict..." aria-label="Search Logs">
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="registry-table">
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Title / Headline</th>
+                            <th>Classification Model</th>
+                            <th>Probability (Fake / Real)</th>
+                            <th>Verdict Status</th>
+                            <th>Attribution Map</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-tbody">
+                        {% if logs|length == 0 %}
+                        <tr>
+                            <td colspan="7" class="empty-table-msg">No news articles predictions found in the database. Go back and run an analysis!</td>
+                        </tr>
+                        {% else %}
+                        {% for log in logs %}
+                        <tr>
+                            <td><strong>{{ log.timestamp }}</strong></td>
+                            <td style="max-width: 250px;" title="{{ log.title }}">{{ log.title }}</td>
+                            <td>{{ log.model_used.upper() }}</td>
+                            <td>
+                                <span style="color:var(--status-fake); font-weight:600;">{{ log.prob_fake }}%</span> / 
+                                <span style="color:var(--status-real); font-weight:600;">{{ log.prob_real }}%</span>
+                            </td>
+                            <td>
+                                <span class="cell-cat {{ log.prediction.lower() }}">{{ log.prediction }}</span>
+                            </td>
+                            <td style="max-width: 300px; max-height: 80px; overflow: hidden; font-size: 0.8rem; line-height: 1.4;">
+                                <div style="max-height: 50px; overflow-y: auto; background: rgba(255,255,255,0.02); padding: 5px; border-radius: 4px; border: 1px solid var(--border-color);">
+                                    {{ log.explained_html|safe }}
+                                </div>
+                            </td>
+                            <td>
+                                <button class="delete-btn" data-id="{{ log.id }}" title="Delete Record">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Script -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Benchmarks — VeriTrack AI Comparer</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="dark-theme">
+    <div class="app-container">
+        <!-- HEADER -->
+        <header class="app-header frosted">
+            <div class="logo-area">
+                <i class="fa-solid fa-newspaper logo-icon"></i>
+                <div class="brand-text">
+                    <h1>VERITRACK AI</h1>
+                    <p>NLP & Machine Learning Fake News Detection System</p>
+                </div>
+            </div>
+            <div class="header-controls">
+                <button id="theme-toggle-btn" class="control-btn" title="Toggle Theme" aria-label="Toggle Theme">
+                    <i class="fa-solid fa-sun"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- NAVIGATION LINK DECK -->
+        <nav class="nav-deck frosted">
+            <a href="/" class="nav-link"><i class="fa-solid fa-magnifying-glass-chart"></i> Analyze Text</a>
+            <a href="/dashboard" class="nav-link"><i class="fa-solid fa-chart-line"></i> Dashboard Logs</a>
+            <a href="/compare" class="nav-link active"><i class="fa-solid fa-scale-balanced"></i> Benchmark Models</a>
+        </nav>
+
+        <!-- MODEL COMPARISONS VIEW -->
+        <section class="comparison-grid">
+            <!-- 1. PASSIVE AGGRESSIVE -->
+            <div class="model-card frosted">
+                <h4>Passive Aggressive Classifier</h4>
+                <p>Designed for online textual learning streams. Efficiently processes incremental text feeds and aggressively updates weights when error margins exceed thresholds.</p>
+                
+                <div class="metric-bar-group">
+                    <div class="metric-label-row"><span>Accuracy</span><span>{{ (metrics.pac.accuracy * 100)|round(2) }}%</span></div>
+                    <div class="bar-track"><div class="bar-fill" style="width: {{ metrics.pac.accuracy * 100 }}%;"></div></div>
+                </div>
+                <div class="metric-bar-group">
+                    <div class="metric-label-row"><span>F1-Score</span><span>{{ (metrics.pac.f1_score * 100)|round(2) }}%</span></div>
+                    <div class="bar-track"><div class="bar-fill" style="width: {{ metrics.pac.f1_score * 100 }}%;"></div></div>
+                </div>
+                
+                <div class="matrix-grid">
+                    <div class="matrix-cell"><span class="val">{{ metrics.pac.confusion_matrix[0][0] }}</span><span class="lbl">True Real</span></div>
+                    <div class="matrix-cell"><span class="val">{{ metrics.pac.confusion_matrix[0][1] }}</span><span class="lbl">False Fake</span></div>
+                    <div class="matrix-cell"><span class="val">{{ metrics.pac.confusion_matrix[1][0] }}</span><span class="lbl">False Real</span></div>
+                    <div class="matrix-cell"><span class="val">{{ metrics.pac.confusion_matrix[1][1] }}</span><span class="lbl">True Fake</span></div>
+                </div>
+            </div>
+
+            <!-- 2. MULTINOMIAL NAIVE BAYES -->
+            <div class="model-card frosted">
+                <h4>Multinomial Naive Bayes</h4>
+                <p>Calculates the conditional probability of word frequencies within documents. Extremely fast baseline model based on standard Bayes theorem rules.</p>
+                
+                <div class="metric-bar-group">
+                    <div class="metric-label-row"><span>Accuracy</span><span>{{ (metrics.nb.accuracy * 100)|round(2) }}%</span></div>
+                    <div class="bar-track"><div class="bar-fill" style="width: {{ metrics.nb.accuracy * 100 }}%;"></div></div>
+                </div>
+                <div class="metric-bar-group">
+                    <div class="metric-label-row"><span>F1-Score</span><span>{{ (metrics.nb.f1_score * 100)|round(2) }}%</span></div>
+                    <div class="bar-track"><div class="bar-fill" style="width: {{ metrics.nb.f1_score * 100 }}%;"></div></div>
+                </div>
+                
+                <div class="matrix-grid">
+                    <div class="matrix-cell"><span class="val">{{ metrics.nb.confusion_matrix[0][0] }}</span><span class="lbl">True Real</span></div>
+                    <div class="matrix-cell"><span class="val">{{ metrics.nb.confusion_matrix[0][1] }}</span><span class="lbl">False Fake</span></div>
+                    <div class="matrix-cell"><span class="val">{{ metrics.nb.confusion_matrix[1][0] }}</span><span class="lbl">False Real</span></div>
+                    <div class="matrix-cell"><span class="val">{{ metrics.nb.confusion_matrix[1][1] }}</span><span class="lbl">True Fake</span></div>
+                </div>
+            </div>
+
+            <!-- 3. LOGISTIC REGRESSION -->
+            <div class="model-card frosted">
+                <h4>Logistic Regression</h4>
+                <p>Standard linear classifier using regularized maximum likelihood estimations. Generates reliable probability outputs via the logistic function.</p>
+                
+                <div class="metric-bar-group">
+                    <div class="metric-label-row"><span>Accuracy</span><span>{{ (metrics.lr.accuracy * 100)|round(2) }}%</span></div>
+                    <div class="bar-track"><div class="bar-fill" style="width: {{ metrics.lr.accuracy * 100 }}%;"></div></div>
+                </div>
+                <div class="metric-bar-group">
+                    <div class="metric-label-row"><span>F1-Score</span><span>{{ (metrics.lr.f1_score * 100)|round(2) }}%</span></div>
+                    <div class="bar-track"><div class="bar-fill" style="width: {{ metrics.lr.f1_score * 100 }}%;"></div></div>
+                </div>
+                
+                <div class="matrix-grid">
+                    <div class="matrix-cell"><span class="val">{{ metrics.lr.confusion_matrix[0][0] }}</span><span class="lbl">True Real</span></div>
+                    <div class="matrix-cell"><span class="val">{{ metrics.lr.confusion_matrix[0][1] }}</span><span class="lbl">False Fake</span></div>
+                    <div class="matrix-cell"><span class="val">{{ metrics.lr.confusion_matrix[1][0] }}</span><span class="lbl">False Real</span></div>
+                    <div class="matrix-cell"><span class="val">{{ metrics.lr.confusion_matrix[1][1] }}</span><span class="lbl">True Fake</span></div>
+                </div>
+            </div>
+
+            <!-- 4. ENSEMBLE CLASSIFIER -->
+            <div class="model-card frosted">
+                <h4>Weighted Voting Ensemble</h4>
+                <p>Weighted voting combination: Passive Aggressive (45%), Naive Bayes (25%), and Logistic Regression (30%). Provides highest robustness against adversarial text inputs.</p>
+                
+                <div class="metric-bar-group">
+                    <div class="metric-label-row"><span>Accuracy</span><span>{{ (metrics.ensemble.accuracy * 100)|round(2) }}%</span></div>
+                    <div class="bar-track"><div class="bar-fill" style="width: {{ metrics.ensemble.accuracy * 100 }}%;"></div></div>
+                </div>
+                <div class="metric-bar-group">
+                    <div class="metric-label-row"><span>F1-Score</span><span>{{ (metrics.ensemble.f1_score * 100)|round(2) }}%</span></div>
+                    <div class="bar-track"><div class="bar-fill" style="width: {{ metrics.ensemble.f1_score * 100 }}%;"></div></div>
+                </div>
+                
+                <div class="matrix-grid">
+                    <div class="matrix-cell"><span class="val">{{ metrics.ensemble.confusion_matrix[0][0] }}</span><span class="lbl">True Real</span></div>
+                    <div class="matrix-cell"><span class="val">{{ metrics.ensemble.confusion_matrix[0][1] }}</span><span class="lbl">False Fake</span></div>
+                    <div class="matrix-cell"><span class="val">{{ metrics.ensemble.confusion_matrix[1][0] }}</span><span class="lbl">False Real</span></div>
+                    <div class="matrix-cell"><span class="val">{{ metrics.ensemble.confusion_matrix[1][1] }}</span><span class="lbl">True Fake</span></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Script -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

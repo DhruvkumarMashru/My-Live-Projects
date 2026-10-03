@@ -1,0 +1,70 @@
+{
+    "pac": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "confusion_matrix": [
+            [
+                126,
+                0
+            ],
+            [
+                0,
+                114
+            ]
+        ],
+        "total_samples": 240
+    },
+    "nb": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "confusion_matrix": [
+            [
+                126,
+                0
+            ],
+            [
+                0,
+                114
+            ]
+        ],
+        "total_samples": 240
+    },
+    "lr": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "confusion_matrix": [
+            [
+                126,
+                0
+            ],
+            [
+                0,
+                114
+            ]
+        ],
+        "total_samples": 240
+    },
+    "ensemble": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "confusion_matrix": [
+            [
+                126,
+                0
+            ],
+            [
+                0,
+                114
+            ]
+        ],
+        "total_samples": 240
+    }
+}
