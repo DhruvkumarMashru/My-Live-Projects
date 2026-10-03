@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - Page Not Found | Dhruvkumar Mashru</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .error-container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+      position: relative;
+      z-index: 10;
+    }
+    .error-code {
+      font-size: clamp(4rem, 15vw, 8rem);
+      font-family: var(--font-display);
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(135deg, #00D4FF 0%, #2563EB 50%, #1D4ED8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+      text-shadow: 0 0 35px rgba(0, 212, 255, 0.4);
+    }
+    .error-title {
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-family: var(--font-display);
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 14px;
+    }
+    .error-desc {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-glow-wrapper">
+    <div class="ambient-orb orb-cyan"></div>
+    <div class="ambient-orb orb-purple"></div>
+  </div>
+  <div class="tech-grid-overlay"></div>
+
+  <div class="error-container">
+    <div class="brand-badge" style="margin-bottom: 24px;">DM</div>
+    <div class="error-code">404</div>
+    <h1 class="error-title">Destination Not Found</h1>
+    <p class="error-desc">The architectural route or asset you are looking for has either shifted or does not exist.</p>
+    <a href="/" class="btn-agency btn-cyan-glow" style="padding: 14px 28px; font-size: 1rem;">
+      <i class="fas fa-home" style="margin-right: 8px;"></i> Return to Portfolio
+    </a>
+  </div>
+</body>
+</html>
