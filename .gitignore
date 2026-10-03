@@ -1,0 +1,29 @@
+# Ignore large trained model weight files (exceed GitHub 100MB limit)
+*.pth
+*.pt
+*.bin
+*.h5
+*.onnx
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# .NET build outputs
+[Bb]in/
+[Oo]bj/
+
+# Environment files
+.env
+
+# OS metadata
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
