@@ -1,0 +1,180 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" translatable="false">BloodCall</string>
+
+    <!-- LauncherActivity Strings !-->
+    <string name="FirstTextViewLaunch">DONATE BLOOD,\nSAVE A LIFE</string>
+    <string name="SecondTextViewLaunch">Please log in or sign up to continue</string>
+    <string name="ThirdTextViewLaunch">Are you representing a hospital? Click here to sign up.</string>
+    <string name="login_button">Log In</string>
+    <string name="signup_button">Sign Up</string>
+
+
+    <!-- RegisterActivity Strings !-->
+    <!-- Some are used also in forgot password !-->
+    <string name="fname_error">Name is required</string>
+    <string name="lname_error">Last name is required</string>
+    <string name="email_req_error">Email is required</string>
+    <string name="email_inv_error">Please provide a valid email address</string>
+    <string name="pass_req_error">Password is required</string>
+    <string name="pass_inv_error">Password must be at least 6 characters</string>
+    <string name="succ_reg">Successfully registered!</string>
+    <string name="fail_reg">Failed to register! </string>
+
+    <!-- LoginActivity Strings !-->
+    <string name="password_box_hint">Password</string>
+    <string name="e_mail_hint">E-mail</string>
+    <string name="login_activity_textViewFirst">LOGIN</string>
+    <string name="reset_password">Forgot your password?</string>
+    <string name="login_error">Invalid email or password , try again or sign up</string>
+
+    <!-- Sign Up Fragment texts,may be changed to obtain resources from online? !-->
+    <string name="click_to_add_a_profile_picture">Click to add a profile picture</string>
+    <string name="first_name_hint">First Name</string>
+    <string name="last_name_hint">Last Name</string>
+    <string name="email_signup_box_hint">Email</string>
+    <string name="password_signup_box_hint">Password</string>
+    <string name="blood_type_description">Please enter your blood type:</string>
+    <string name="register_button">REGISTER</string>
+    <string name="createAccountTextView">CREATE \nACCOUNT</string>
+
+    <!-- No Internet Screen !-->
+    <string name="noInternet">No internet connection!</string>
+    <string name="noInternetSubtext">This app requires an internet connection.\nPlease connect to a network</string>
+    <string name="textViewWithSwitch">Receive emergency notifications</string>
+
+    <!-- Main Activity Strings !-->
+    <string name="side_bar_home">Home</string>
+    <string name="side_bar_map">Hospital Map</string>
+    <string name="settings_toolbar">Open source licences</string>
+    <string name="side_bar_signout">Sign Out</string>
+    <string name="signed_out">Signed Out</string>
+    <string name="side_bar_add_event">Add Event</string>
+
+    <!--Forgot Password Strings !-->
+    <string name="res_email_succ">Reset email sent successfully!</string>
+    <string name="res_email_err">Failed to send reset email!</string>
+    <string name="res_btn">Reset</string>
+
+    <!--Marker Info Fragment Strings !-->
+    <string name="btnMakerInfo">Share</string>
+    <string name="btnMakerSkip">Close</string>
+
+    <string-array name="blood_types">
+        <item>A</item>
+        <item>B</item>
+        <item>AB</item>
+        <item>O</item>
+    </string-array>
+
+    <string-array name="pos_neg">
+        <item>+</item>
+        <item>-</item>
+    </string-array>
+    <string name="title_activity_main" translatable="false">MainActivity</string>
+
+
+    <!--to toggle the open close button
+        of the navigation drawer-->
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="add_new_alert">Add New Alert</string>
+    <string name="new_alert_text">What kind of blood does the patient have? \n Alert will be sent to all compatible blood types</string>
+    <string name="create_alert_btn">Create Alert</string>
+    <string name="hospital_mode">HOSPITAL MODE</string>
+
+    <string name="marker_type_1">Address: %1$s \n Organized By: %2$s \n\n Date: %3$s \n\n Email: %4$s</string>
+    <string name="marker_type_2">Address: %1$s \n Email: %2$s</string>
+    <string name="password_reset">Password Reset</string>
+    <string name="add_event_hospital_frag_btn">Add Event</string>
+    <string name="date_hint_hospital" tools:ignore="MissingTranslation">Date</string>
+    <string name="address_hint_hospital">Address</string>
+    <string name="name_hint_hospital" tools:ignore="MissingTranslation">Event Name</string>
+
+    <string name="notif_channel_name">Emergency Notification</string>
+    <string name="notif_title">Your blood is needed!</string>
+    <string name="notif_text_template">At location: %1$s, tap to learn more.</string>
+    <string name="create_hospital_account">CREATE HOSPITAL ACCOUNT</string>
+    <string name="curr_lvl_text">My Level: %1$d</string>
+    <string name="new_lvl_xp">%1$d XP remaining for level %2$d</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="qrText">Please insert a QR code into the frame.</string>
+    <string name="qr_succ">User checked in successfully!</string>
+    <string name="qr_fail_1">Invalid QR code!</string>
+    <string name="qr_fail_2">Could not check in user!</string>
+    <string name="check_in">Check in</string>
+    <string name="my_history">Blood Donation History</string>
+    <string name="navigate">Navigate</string>
+    <string name="close">CLOSE</string>
+    <string name="qr_text">This is your QR code. \n\nShow this to hospital staff in order to be checked in.</string>
+    <string name="bg_loc_title">Background Location Access is needed.</string>
+    <string name="bg_loc_text">In order for the emergency notifications to work, you need to provide background notification permission. Do that now?</string>
+    <string name="notif_first_time">Thank you for turning on push notifications! You have been awarded 10 XP!</string>
+    <string name="event_added">Event Added!</string>
+    <string name="alert_added">Alert Created!</string>
+    <string name="share_check_event_out">Check out this event being hosted right now by:</string>
+    <string name="share_at">at</string>
+    <string name="_2021_2022" translatable="false">2021-2022</string>
+    <string name="names" translatable="false"><a href="https://github.com/thanbimp">Athanasios Bimpas</a> \n <a href="https://github.com/kitsakisGk">Georgios Kitsakis</a> \n <a href="https://github.com/kourounisgiorgos">Georgios Kourounis</a> \n <a href="https://github.com/Bleemoose">Stefanos Togias</a></string>
+    <string name="git_link"><a href="https://github.com/BloodCall">GitHub Project Page</a></string>
+    <string name="licence_text">Distributed under GPL v3. A copy of the licence can be found <a href="https://www.gnu.org/licenses/gpl-3.0.html">here</a>. For library licences see \"Open Source Licences\" option.</string>
+    <string name="about">About</string>
+    <string name="icons_disc">Icons from logomakr.com and Android default resources.</string>
+    <string name="enable_location_title">Please enable the location setting on your device.</string>
+    <string name="enable_location_text">This application requires the location setting on your phone to be enabled in order to display the map, and send you geographically filtered notifications. Please turn it on to continue</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="leaderboard">Contributors</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="edit_profile">EDIT PROFILE</string>
+    <string name="update">UPDATE</string>
+    <string name="please_include_zip_code">Please include zip code</string>
+    <string name="total_donors_checked_in">Total Donors Checked In:</string>
+    <string name="hospital_profile">Hospital Profile</string>
+    <string name="enter_your_new_password">Enter your new password...</string>
+    <string name="repeat_your_new_password">Repeat your new password...</string>
+    <string name="enter_your_current_password">Enter your current password...</string>
+    <string name="change_password">CHANGE PASSWORD</string>
+    <string name="apply">Apply</string>
+    <string name="list_warning">According to Red Cross, you should donate blood once every 56 days. For more information, consult a physician. Please do not attempt any actions that may harm you in order to obtain a higher ranking.</string>
+    <string name="title_activity_hospital_settings">Settings</string>
+    <string name="title_activity_user_settings">Settings</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="post_added">Your post has been added</string>
+    <string name="pwd_not_matching">Please check that you have inputted the same password in both fields.</string>
+    <string name="pwd_updated">Your password has been updated.</string>
+    <string name="pwd_upd_error">There was an error updating your password.</string>
+    <string name="pwd_wrong_curr">You have entered your current password wrong. Please try again.</string>
+    <string name="forum_tab">Forum</string>
+    <string name="leaderboard_tab">Leaderboard</string>
+    <string name="add_event_addr_error">Address not found!</string>
+    <string name="hosp_s_u_addr_err">Invalid address</string>
+    <string name="maps_loc_err">We were not able to retrieve your location because you denied the permission.</string>
+    <string name="info_img_saved">Image was saved</string>
+    <string name="info_no_img_saved">No image saved.</string>
+    <string name="notif_event">Check out this new event near you!</string>
+    <string name="event_notif_body">Event %s has been created near you! Click here to open the app.</string>
+    <string name="event_chan_name">Events</string>
+    <string name="add_post">Add post</string>
+    <string name="post_hint_body">Type your text here..</string>
+    <string name="post_header">ADD POST</string>
+    <string name="post_title_hint">Title</string>
+    <string name="post_flair">flair</string>
+    <string name="map_dialog_title">What are you looking to donate?</string>
+    <string name="map_dialog_blood">Regular blood</string>
+    <string name="map_dialog_plasma">Plasma</string>
+    <string name="map_dialog_platelets">Platelets</string>
+    <string name="menu_community">Community</string>
+    <string name="hosp_sett_donation_summary">Select what kind of donations you are currently accepting</string>
+    <string name="hosp_settings_donation_type">Donation type</string>
+    <string name="hosp_settings_cat_title">Hospital settings</string>
+    <string name="settings_information_cat">Information</string>
+    <string name="user_settings_not_cat">Notifications</string>
+    <string name="emerg_notif_summary">Select the distance of the hospitals you want to receive alerts from</string>
+    <string name="emerg_notif_dist">Emergency notification distance</string>
+    <string name="event_notifs_switch">Receive event notifications</string>
+    <string name="event_notif_dist">Event notification distance</string>
+    <string name="event_notif_summary">Select the distance of the events you want to receive alerts from</string>
+    <string name="settings_account_cat">Account</string>
+    <string name="edit_profile_summary">Change your profile information, as well as your password</string>
+    <string name="edit_profile_settings">Edit profile</string>
+
+</resources>
